@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="shortcut icon" href="assets/img/logo/MELICO LOGO 2.png" type="image/x-icon">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+   <link rel="stylesheet" href="assets/css/styles.css">
+
+   <title>MELICO – Kapcsolatfelvetel</title>
+</head>
+<body>
+
+<!--==================== HEADER ====================-->
+<header class="header" id="header">
+   <nav class="nav container">
+      <a href="index.html" class="nav__logo">
+         <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+      </a>
+
+      <div class="nav__menu" id="nav-menu">
+         <ul class="nav__list">
+            <li class="nav__item">
+               <a href="index.html" class="nav__link">Főoldal</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="termekeink.html" class="nav__link">Termékeink</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="rolunk.html" class="nav__link">Rólunk</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="kapcsolatfelvetel.html" class="nav__link active-link">Kapcsolatfelvétel</a>
+            </li>
+
+            <li class="nav__item" id="nav-login-item">
+                  <a href="signIn.html" id="signInBtn" class="nav__signin button">
+                        Bejelentkezés
+                  </a>
+               </li>
+
+               <li class="nav__item" id="nav-user-item" style="display: none;">
+                  <div class="nav__profile-container">
+                        <i class="ri-account-circle-fill nav__profile-icon" id="profileIcon"></i>
+                        
+                        <div class="nav__dropdown" id="profileDropdown">
+                           <span id="user-email-display" class="nav__dropdown-email"></span>
+                           <hr>
+                           <a href="adatok.html" class="nav__dropdown-link">
+                              <i class="ri-file-list-3-line"></i> Adatok
+                           </a>
+                           <a href="#" class="nav__dropdown-link" id="logoutBtn">
+                              <i class="ri-logout-box-r-line"></i> Kijelentkezés
+                           </a>
+                        </div>
+                  </div>
+               </li>
+         </ul>
+
+         <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+         </div>
+
+            <img src="assets/img/cheese2.png" alt="image" class="nav__img-1">
+            <img src="assets/img/cheese1.png" alt="image" class="nav__img-2">
+      </div>
+
+      <div class="nav__toggle" id="nav-toggle">
+         <i class="ri-menu-fill"></i>
+      </div>
+   </nav>
+</header>
+
+<!--==================== MAIN ====================-->
+<main class="main">
+<img src="assets/img/RendelésÉSKapcsolat-bg.png" alt="image" class="home__bg">
+
+<!--==================== KAPCSOLAT ====================-->
+<section class="about section about--reverse">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Kapcsolat</h2>
+
+         <p class="about__description">
+            Ha kérdése van rendeléseinkkel, termékeinkkel vagy a kiszállítással kapcsolatban,
+            ügyfélszolgálatunk készséggel áll rendelkezésére.
+            Célunk, hogy minden vásárlónk gyors és pontos választ kapjon.
+         </p>
+
+         <p class="about__description">
+            Elérhet minket e-mailben vagy telefonon munkanapokon,
+            illetve személyesen is fogadjuk előre egyeztetett időpontban.
+         </p>
+      </div>
+
+      <img src="assets/img/home-melico2.PNG" alt="Kapcsolat" class="about-img">
+   </div>
+</section>
+
+<!--==================== RENDELÉS ÉS ÜGYINTÉZÉS ====================-->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <img src="assets/img/cheese4.png" alt="Rendelés" class="about-img">
+
+      <div class="about__data">
+         <h2 class="section__title">Rendelés és ügyintézés</h2>
+
+         <p class="about__description">
+            A rendelés a webáruházon keresztül néhány egyszerű lépésben leadható.
+            A kiválasztott termékek kosárba helyezése után
+            biztonságos fizetési felületen véglegesítheti vásárlását.
+         </p>
+
+         <p class="about__description">
+            A rendelés állapotáról e-mailben küldünk visszaigazolást,
+            valamint tájékoztatást a kiszállítás várható időpontjáról.
+            Amennyiben kérdés merülne fel, ügyfélszolgálatunk segít.
+         </p>
+      </div>
+   </div>
+</section>
+
+<!--==================== ELHELYEZKEDÉS ====================-->
+<section class="about section about--reverse">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Hol talál minket?</h2>
+
+         <p class="about__description">
+            Központunk Budapesten található,
+            ahol az adminisztráció, a raktározás és a kiszállítás koordinálása történik.
+            Személyes átvétel kizárólag előzetes egyeztetés alapján lehetséges.
+         </p>
+
+         <p class="about__description">
+            Telephelyünk könnyen megközelíthető tömegközlekedéssel és autóval egyaránt,
+            így partnereink és vásárlóink számára is jól elérhető.
+         </p>
+
+         <ul class="about__description">
+            <li>1095 Budapest, Ipar utca 12.</li>
+            <li>Hétfő – Péntek: 9:00 – 18:00</li>
+         </ul>
+      </div>
+
+      <div class="map__container">
+         <iframe
+            src="https://www.google.com/maps?q=1095+Budapest,+Ipar+utca+12&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+         </iframe>
+      </div>
+   </div>
+</section>
+
+
+
+
+
+<!--==================== FONTOS TUDNIVALÓK ====================-->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <img src="assets/img/Fontos tudnivalók.jpg" alt="Információk" class="about-img">
+
+      <div class="about__data">
+         <h2 class="section__title">Fontos tudnivalók</h2>
+
+         <p class="about__description">
+            A sajtok romlandó termékek, ezért kérjük,
+            hogy a kiszállítást követően mielőbb gondoskodjon
+            a megfelelő hűtött tárolásról.
+         </p>
+
+         <p class="about__description">
+            Amennyiben a csomag sérülten érkezik,
+            kérjük haladéktalanul jelezze ügyfélszolgálatunk felé,
+            hogy mielőbb megoldást találjunk.
+         </p>
+      </div>
+   </div>
+</section>
+
+</main>
+
+<!--==================== FOOTER ====================-->
+<footer class="footer">
+   <div class="footer__container container grid">
+      <div>
+         <a href="index.html" class="footer__logo">MELICO</a>
+         <p class="footer__description">
+            Kézműves sajtok <br> közvetlenül a manufaktúrából
+         </p>
+      </div>
+   </div>
+
+
+   <span class="footer__copy">
+      &#169; 2026 MELICO. Minden jog fenntartva.
+   </span>
+</footer>
+
+
+<!--========== SCROLL UP ==========-->
+   <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-line"></i>
+   </a>
+
+<script src="assets/js/scrollreveal.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

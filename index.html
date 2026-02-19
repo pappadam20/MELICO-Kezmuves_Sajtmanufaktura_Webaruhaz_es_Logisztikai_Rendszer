@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <!--=============== FAVICON ===============-->
+   <link rel="shortcut icon" href="assets/img/logo/MELICO LOGO 2.png" type="image/x-icon">
+
+   <!--=============== REMIXICONS ===============-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+
+   <!--=============== CSS ===============-->
+   <link rel="stylesheet" href="assets/css/styles.css">
+
+   <title>MELICO - Kézműves Sajtmanufaktúra</title>
+</head>
+<body>
+   <!--==================== HEADER ====================-->
+   <header class="header" id="header">
+      <nav class="nav container">
+         <a href="index.html" class="nav__logo">
+            <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+         </a>
+
+         <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+               <li class="nav__item">
+                  <a href="index.html" class="nav__link active-link">Főoldal</a>
+               </li>
+
+               <li class="nav__item">
+                  <a href="termekeink.html" class="nav__link">Termékeink</a>
+               </li>
+
+               <li class="nav__item">
+                  <a href="rolunk.html" class="nav__link">Rólunk</a>
+               </li>
+
+               <li class="nav__item">
+                  <a href="kapcsolatfelvetel.html" class="nav__link">Kapcsolatfelvétel</a>
+               </li>
+
+
+               <li class="nav__item" id="nav-login-item">
+                  <a href="signIn.html" id="signInBtn" class="nav__signin button">
+                        Bejelentkezés
+                  </a>
+               </li>
+
+               <li class="nav__item" id="nav-user-item" style="display: none;">
+                  <div class="nav__profile-container">
+                        <i class="ri-account-circle-fill nav__profile-icon" id="profileIcon"></i>
+                        
+                        <div class="nav__dropdown" id="profileDropdown">
+                           <span id="user-email-display" class="nav__dropdown-email"></span>
+                           <hr>
+                           <a href="adatok.html" class="nav__dropdown-link">
+                              <i class="ri-file-list-3-line"></i> Adatok
+                           </a>
+                           <a href="#" class="nav__dropdown-link" id="logoutBtn">
+                              <i class="ri-logout-box-r-line"></i> Kijelentkezés
+                           </a>
+                        </div>
+                  </div>
+               </li>
+
+
+
+            </ul>
+
+            <!-- Close button -->
+            <div class="nav__close" id="nav-close">
+               <i class="ri-close-line"></i>
+            </div>
+
+            <img src="assets/img/cheese2.png" alt="image" class="nav__img-1">
+            <img src="assets/img/cheese1.png" alt="image" class="nav__img-2">
+         </div>
+
+         <!-- Toggle button -->
+         <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-menu-fill"></i>
+         </div>
+      </nav>
+   </header>
+
+   <!--==================== MAIN ====================-->
+   <main class="main">
+      
+      <!--==================== HOME ====================-->
+      <section class="home section" id="home">
+         <img src="assets/img/home-bg.jpg" alt="image" class="home__bg">
+         <div class="home__shadow"></div>
+
+         <div class="home__container container grid">
+            <div class="home__data">
+               <h1 class="home__title">
+
+                  <a href="#new" class="nav__link">Újdonságok<br></a>
+
+                  <a href="#favorite" class="nav__link">Kedvenceink<br></a>
+
+                  <a href="#testimonial" class="nav__link">Vásárlói Vélemények<br></a>
+
+               </h1>
+
+               <a href="termekeink.html" class="button">Fedezze Fel Termékeinket</a>
+
+            </div>
+
+            <div class="home__image">
+               <img src="assets/img/cheese3.png" alt="image" class="home__img">
+            </div>
+
+            <footer class="home__footer">
+               <div class="home__location">
+                  <i class="ri-map-pin-line"></i>
+                  <span>1095 Budapest, Ipar utca 12.</span>
+               </div>
+
+               <div class="home__social">
+                  <a href="https://www.facebook.com/" target="_blank">
+                     <i class="ri-facebook-circle-line"></i>
+                  </a>
+
+                  <a href="https://www.instagram.com/" target="_blank">
+                     <i class="ri-instagram-line"></i>
+                  </a>
+
+                  <a href="https://www.youtube.com/" target="_blank">
+                     <i class="ri-youtube-line"></i>
+                  </a>
+               </div>
+
+            </footer>
+         </div>
+      </section>
+
+      <!--==================== NEWS ====================-->
+      <section class="new section" id="new">
+         <h2 class="section__title">Újdonságok</h2>
+
+         <div class="new__container container grid">
+            <div class="new__content grid">
+               <article class="new__card">
+                  <div class="new__data">
+                     <h2 class="new__title">Camembert de Normandie</h2>
+                     <p class="new__description">Friss, lágy sajt helyi alapanyagokból, tökéletes ízélménnyel.</p>
+                  </div>
+
+                  <img src="assets/img/Kategória ID 1/Camembert de Normandie.png" alt="image" class="new__img">
+               </article>
+
+               <article class="new__card">
+                  <div class="new__data">
+                     <h2 class="new__title">Chèvre Frais</h2>
+                     <p class="new__description">Kecskesajt, friss és krémes, hagyományos recept szerint készítve.</p>
+                  </div>
+
+                  <img src="assets/img/Kategória ID 1/Chevre Frais.png" alt="image" class="new__img">
+               </article>
+
+               <article class="new__card">
+                  <div class="new__data">
+                     <h2 class="new__title">Gorgonzola Dolce</h2>
+                     <p class="new__description">Édes, karakteres kékpenészes sajt, amely ízvilágával elkápráztat.</p>
+                  </div>
+
+                  <img src="assets/img/Kategória ID 1/Gorgonzola Dolce DOP.png" alt="image" class="new__img">
+               </article>
+            </div>
+
+            <a href="termekeink.html" class="new__button button">További Termékeink</a>
+            
+         </div>
+      </section>
+
+      <!--==================== ABOUT ====================-->
+      <section class="about section" id="about">
+         <div class="about__container container grid">
+            <div class="about__data">
+               <h2 class="section__title">Rólunk</h2>
+
+               <p class="about__description">
+                  A MELICO prémium minőségű kézműves sajtokat kínál, a hagyományos receptek és a friss, helyi alapanyagok felhasználásával. 
+                  Webáruházunk egyszerűvé teszi az egyedi sajtok online rendelését.
+               </p>
+
+               <a href="rolunk.html" class="button">Tudjon Meg Többet</a>
+
+               <img src="assets/img/logo/MELICO LOGO 2.png" alt="image" class="about__cheese">
+            </div>
+
+            <img src="assets/img/about-melico.jpg" alt="image" class="about-img">
+         </div>
+      </section>
+      
+      <!--==================== FAVORITES ====================-->
+      <section class="favorite section" id="favorite">
+         <h2 class="section__title">Vásárlói Kedvencek</h2>
+
+         <div class="favorite__container container grid">
+            <article class="favorite__card">
+               <a href="termekek/2.FélkeménySajtok/Trappista.html">
+                  <img src="assets/img/Kategória ID 2/Trappista.png" class="favorite__img">
+               </a>
+
+               <div class="favorite__data">
+                  <h2 class="favorite__title">Trappista</h2>
+                  <span class="favorite__subtitle">Félkemény sajt</span>
+                  <h3 class="favorite__price">3300 Ft/kg</h3>
+               </div>
+
+               <button class="favorite__button button">
+                  <i class="ri-add-line"></i>
+               </button>
+            </article>
+
+            <article class="favorite__card">
+               <a href="termekek/3.KeménySajtok/ParmigianoReggianoDOP.html">
+                  <img src="assets/img/Kategória ID 3/Parmigiano Reggiano DOP.png" class="favorite__img">
+               </a>
+
+               <div class="favorite__data">
+                  <h2 class="favorite__title">Parmigiano Reggiano</h2>
+                  <span class="favorite__subtitle">Kemény sajt</span>
+                  <h3 class="favorite__price">6500 Ft/kg</h3>
+               </div>
+
+               <button class="favorite__button button">
+                  <i class="ri-add-line"></i>
+               </button>
+            </article>
+
+            <article class="favorite__card">
+               <a href="termekek/1.LágyésFrissSajtok/GorgonzolaDolceDOP.html">
+                  <img src="assets/img/Kategória ID 1/Gorgonzola Dolce DOP.png" class="favorite__img">
+               </a>
+
+               <div class="favorite__data">
+                  <h2 class="favorite__title">Gorgonzola Dolce</h2>
+                  <span class="favorite__subtitle">Kékpenészes sajt</span>
+                  <h3 class="favorite__price">4800 Ft/kg</h3>
+               </div>
+
+               <button class="favorite__button button">
+                  <i class="ri-add-line"></i>
+               </button>
+            </article>
+         </div>
+      </section>
+
+      <!--==================== Customer Reviews ====================-->
+      <section class="testimonial section" id="testimonial">
+         <h2 class="section__title">Vásárlói Vélemények</h2>
+
+         <div class="testimonial__container container grid">
+            <div class="testimonial__content grid">
+               <article class="testimonial__card">
+                  <div class="testimonial__data">
+                     <i class="ri-double-quotes-l testimonial__icon"></i>
+                     <p class="testimonial__description">
+                        A sajtok mindig frissek és ízletesek. Ez a minőség egyedülálló, és a kiszállítás gyors és pontos.
+                     </p>
+
+                     <div class="testimonial__profile">
+                        <img src="assets/img/Vásárlói Vélemények/Péter.jpg" alt="image" class="testimonial__img">
+                        <div>
+                           <h3 class="testimonial__name">Péter</h3>
+                           <span class="testimonial__status">Rendszeres Vásárló</span>
+                        </div>
+                     </div>
+                  </div>
+               </article>
+
+
+               <article class="testimonial__card">
+                  <div class="testimonial__data">
+                     <i class="ri-double-quotes-l testimonial__icon"></i>
+                     <p class="testimonial__description">
+                        Különösen tetszik, hogy a rendelés után végig nyomon követhető a kiszállítás.
+                        A sajtok kifogástalan állapotban érkeztek meg, érezhető a gondos logisztika.
+                     </p>
+
+                     <div class="testimonial__profile">
+                        <img src="assets/img/Vásárlói Vélemények/Katalin.jpg" alt="image" class="testimonial__img">
+                        <div>
+                           <h3 class="testimonial__name">Katalin</h3>
+                           <span class="testimonial__status">Prémium Vásárló</span>
+                        </div>
+                     </div>
+                  </div>
+               </article>
+
+
+
+               <article class="testimonial__card">
+                  <div class="testimonial__data">
+                     <i class="ri-double-quotes-l testimonial__icon"></i>
+                     <p class="testimonial__description">
+                        Ritkán találni ilyen jól szervezett kézműves webáruházat.
+                        A futár pontos volt, a termékek pedig valóban prémium minőséget képviselnek.
+                     </p>
+
+                     <div class="testimonial__profile">
+                        <img src="assets/img/Vásárlói Vélemények/Balázs.jpg" alt="image" class="testimonial__img">
+                        <div>
+                           <h3 class="testimonial__name">Balázs</h3>
+                           <span class="testimonial__status">Visszatérő Vásárló</span>
+                        </div>
+                     </div>
+                  </div>
+               </article>
+
+            </div>
+         </div>
+      </section>
+
+      <!--==================== VISIT ====================-->
+      <section class="visit section" id="visit">
+         <div class="visit__container">
+            <img src="assets/img/home-melico.png" alt="image" class="visit__bg">
+            <div class="visit__shadow"></div>
+
+            <div class="visit__content container grid">
+               <div class="visit__data">
+                  <h2 class="visit__title">Kapcsolatfelvétel</h2>
+
+                  <p class="visit__description">
+                     Látogasson el hozzánk, vagy rendeljen online a prémium kézműves sajtokért.
+                  </p>
+
+                  <a href="kapcsolatfelvetel.html" class="button">Kapcsolatfelvétel</a>
+               </div>
+            </div>
+         </div>
+      </section>
+   </main>
+
+   <!--==================== FOOTER ====================-->
+   <footer class="footer">
+      <div class="footer__container container grid">
+         <div>
+            <a href="#" class="footer__logo">MELICO</a>
+            <p class="footer__description">
+               Kézműves sajtok <br> közvetlenül a manufaktúrából
+            </p>
+         </div>
+
+         <div class="footer__container grid">
+            <div>
+               <h3 class="footer__title">Cím</h3>
+
+               <ul class="footer__list">
+                  <li>
+                     <address class="footer__info">1095 Budapest, Ipar utca 12.</address>
+                  </li>
+
+                  <li>
+                     <address class="footer__info"> H-P 9:00 - 18:00</address>
+                  </li>
+               </ul>
+            </div>
+
+            <div>
+               <h3 class="footer__title">Kapcsolatfelvétel</h3>
+
+               <ul class="footer__list">
+                  <li>
+                     <address class="footer__info"> info@melico.hu</address>
+                  </li>
+
+                  <li>
+                     <address class="footer__info"> +36 30 123 4567</address>
+                  </li>
+               </ul>
+            </div>
+
+            <div>
+               <h3 class="footer__title">Kövess Minket</h3>
+
+               <div class="footer__social">
+                  <a href="https://www.facebook.com/" target="_blank">
+                     <i class="ri-facebook-circle-line"></i>
+                  </a>
+
+                  <a href="https://www.instagram.com/" target="_blank">
+                     <i class="ri-instagram-line"></i>
+                  </a>
+
+                  <a href="https://www.youtube.com/" target="_blank">
+                     <i class="ri-youtube-line"></i>
+                  </a>
+               </div>
+            </div>
+         </div>
+
+         <img src="assets/img/cheese5.png" alt="image" class="footer__img-1">
+         <img src="assets/img/cheese4.png" alt="image" class="footer__img-2">
+      </div>
+
+      <span class="footer__copy">
+         &#169; 2026 MELICO. Minden jog fenntartva.
+      </span>
+   </footer>
+
+   <!--========== SCROLL UP ==========-->
+   <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-line"></i>
+   </a>
+
+   <!--=============== SCROLLREVEAL ===============-->
+   <script src="assets/js/scrollreveal.min.js"></script>
+
+   <!--=============== MAIN JS ===============-->
+   <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="shortcut icon" href="assets/img/logo/MELICO LOGO 2.png" type="image/x-icon">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+   <link rel="stylesheet" href="assets/css/styles.css">
+
+   <title>MELICO – Termékeink</title>
+</head>
+<body>
+
+<!--==================== HEADER ====================-->
+<header class="header" id="header">
+   <nav class="nav container">
+      <a href="index.html" class="nav__logo">
+         <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+      </a>
+
+      <div class="nav__menu" id="nav-menu">
+         <ul class="nav__list">
+            <li class="nav__item">
+               <a href="index.html" class="nav__link">Főoldal</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="termekeink.html" class="nav__link active-link">Termékeink</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="rolunk.html" class="nav__link">Rólunk</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="kapcsolatfelvetel.html" class="nav__link">Kapcsolatfelvétel</a>
+            </li>
+
+            <li class="nav__item" id="nav-login-item">
+                  <a href="signIn.html" id="signInBtn" class="nav__signin button">
+                        Bejelentkezés
+                  </a>
+               </li>
+
+               <li class="nav__item" id="nav-user-item" style="display: none;">
+                  <div class="nav__profile-container">
+                        <i class="ri-account-circle-fill nav__profile-icon" id="profileIcon"></i>
+                        
+                        <div class="nav__dropdown" id="profileDropdown">
+                           <span id="user-email-display" class="nav__dropdown-email"></span>
+                           <hr>
+                           <a href="adatok.html" class="nav__dropdown-link">
+                              <i class="ri-file-list-3-line"></i> Adatok
+                           </a>
+                           <a href="#" class="nav__dropdown-link" id="logoutBtn">
+                              <i class="ri-logout-box-r-line"></i> Kijelentkezés
+                           </a>
+                        </div>
+                  </div>
+               </li>
+         </ul>
+
+         <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+         </div>
+
+      <img src="assets/img/cheese2.png" alt="image" class="nav__img-1">
+      <img src="assets/img/cheese1.png" alt="image" class="nav__img-2">
+      </div>
+
+      <div class="nav__toggle" id="nav-toggle">
+         <i class="ri-menu-fill"></i>
+      </div>
+   </nav>
+</header>
+
+<!--==================== MAIN ====================-->
+<main class="main">
+<img src="assets/img/Termékek-bg.png" alt="image" class="home__bg">
+
+
+<!--==================== SAJTOK RÖVID ISMERTETÉSE ====================-->
+<section class="about section" id="termekeink">
+   <div class="about__container container grid">
+      <div class="about__data">
+         <h2 class="section__title">Termékeink</h2>
+
+         <p class="about__description">
+            Kínálatunk gondosan válogatott, prémium minőségű kézműves sajtokból áll, 
+            amelyek hazai és nemzetközi, megbízható beszállítóktól érkeznek. 
+            A minőséget, frissességet és az egyedi ízvilágot minden termékünknél kiemelten kezeljük.
+         </p>
+      </div>
+
+      <img src="assets/img/cheese3.png" alt="Kézműves sajtok" class="about-img">
+   </div>
+</section>
+
+
+<div class="page-nav">
+  <a href="#category1" class="nav__link">Lágy és Friss Sajtok</a>
+  <a href="#category2" class="nav__link">Félkemény Sajtok</a>
+  <a href="#category3" class="nav__link">Kemény Sajtok</a>
+</div>
+
+
+<!--==================== CATEGORY 1 ====================-->
+<section class="favorite section" id="category1">
+   <h2 class="section__title">Lágy és Friss Sajtok</h2>
+
+   <div class="favorite__container container grid">
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/CamembertdeNormandieAOP.html">
+            <img src="assets/img/Kategória ID 1/Camembert de Normandie.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Camembert de Normandie AOP</h2>
+            <span class="favorite__subtitle">Lágy sajt</span>
+            <h3 class="favorite__price">2500 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/ChévreFrais.html">
+            <img src="assets/img/Kategória ID 1/Chevre Frais.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Chèvre Frais</h2>
+            <span class="favorite__subtitle">Kecskesajt</span>
+            <h3 class="favorite__price">3100 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/GorgonzolaDolceDOP.html">
+            <img src="assets/img/Kategória ID 1/Gorgonzola Dolce DOP.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Gorgonzola Dolce DOP</h2>
+            <span class="favorite__subtitle">Kékpenészes</span>
+            <h3 class="favorite__price">4800 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/Ricotta.html">
+            <img src="assets/img/Kategória ID 1/Ricotta.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Ricotta</h2>
+            <span class="favorite__subtitle">Friss sajt</span>
+            <h3 class="favorite__price">2900 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/MozzarelladiBufalaDOP.html">
+            <img src="assets/img/Kategória ID 1/Mozzarella di Bufala Campana DOP.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Mozzarella di Bufala DOP</h2>
+            <span class="favorite__subtitle">Friss sajt</span>
+            <h3 class="favorite__price">2300 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/Mascarpone.html">
+            <img src="assets/img/Kategória ID 1/Mascarpone.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Mascarpone</h2>
+            <span class="favorite__subtitle">Krémes sajt</span>
+            <h3 class="favorite__price">1900 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/BriedeMeauxAOP.html">
+            <img src="assets/img/Kategória ID 1/Brie de Meaux AOP.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Brie de Meaux AOP</h2>
+            <span class="favorite__subtitle">Lágy sajt</span>
+            <h3 class="favorite__price">2700 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/1.LágyésFrissSajtok/Burrata.html">
+            <img src="assets/img/Kategória ID 1/Burrata.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Burrata</h2>
+            <span class="favorite__subtitle">Prémium friss sajt</span>
+            <h3 class="favorite__price">5500 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+   </div>
+</section>
+
+<!--==================== CATEGORY 2 ====================-->
+<section class="favorite section" id="category2">
+   <h2 class="section__title">Félkemény Sajtok</h2>
+
+   <div class="favorite__container container grid">
+
+      <article class="favorite__card">
+         <a href="termekek/2.FélkeménySajtok/Trappista.html">
+            <img src="assets/img/Kategória ID 2/Trappista.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Trappista</h2>
+            <span class="favorite__subtitle">Félkemény sajt</span>
+            <h3 class="favorite__price">3300 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/2.FélkeménySajtok/GoudaHolland.html">
+            <img src="assets/img/Kategória ID 2/Gouda Holland.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Gouda Holland</h2>
+            <span class="favorite__subtitle">Félkemény sajt</span>
+            <h3 class="favorite__price">2100 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/2.FélkeménySajtok/Edami.html">
+            <img src="assets/img/Kategória ID 2/Edami.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Edami</h2>
+            <span class="favorite__subtitle">Félkemény sajt</span>
+            <h3 class="favorite__price">4900 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/2.FélkeménySajtok/Maasdam.html">
+            <img src="assets/img/Kategória ID 2/Maasdam.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Maasdam</h2>
+            <span class="favorite__subtitle">Félkemény sajt</span>
+            <h3 class="favorite__price">3800 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+   </div>
+</section>
+
+<!--==================== CATEGORY 3 ====================-->
+<section class="favorite section" id="category3">
+   <h2 class="section__title">Kemény Sajtok</h2>
+
+   <div class="favorite__container container grid">
+
+      <article class="favorite__card">
+         <a href="termekek/3.KeménySajtok/ParmigianoReggianoDOP.html">
+            <img src="assets/img/Kategória ID 3/Parmigiano Reggiano DOP.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Parmigiano Reggiano DOP</h2>
+            <span class="favorite__subtitle">Kemény sajt</span>
+            <h3 class="favorite__price">6500 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/3.KeménySajtok/GranaPadanoDOP.html">
+            <img src="assets/img/Kategória ID 3/Grana Padano DOP.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Grana Padano DOP</h2>
+            <span class="favorite__subtitle">Kemény sajt</span>
+            <h3 class="favorite__price">7200 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/3.KeménySajtok/PecorinoRomanoDOP.html">
+            <img src="assets/img/Kategória ID 3/Pecorino Romano DOP.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Pecorino Romano DOP</h2>
+            <span class="favorite__subtitle">Kemény sajt</span>
+            <h3 class="favorite__price">5900 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+      <article class="favorite__card">
+         <a href="termekek/3.KeménySajtok/ComtéAOP.html">
+            <img src="assets/img/Kategória ID 3/Comté AOP.png" class="favorite__img">
+         </a>
+         <div class="favorite__data">
+            <h2 class="favorite__title">Comté AOP</h2>
+            <span class="favorite__subtitle">Kemény sajt</span>
+            <h3 class="favorite__price">6900 Ft/kg</h3>
+         </div>
+         <button class="favorite__button button"><i class="ri-add-line"></i></button>
+      </article>
+
+   </div>
+</section>
+
+</main>
+
+<!--==================== FOOTER ====================-->
+<footer class="footer">
+   <span class="footer__copy">
+      &#169; 2026 MELICO. Minden jog fenntartva.
+   </span>
+</footer>
+
+<!--========== SCROLL UP ==========-->
+   <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-line"></i>
+   </a>
+
+<script src="assets/js/scrollreveal.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

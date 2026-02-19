@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="shortcut icon" href="assets/img/logo/MELICO LOGO 2.png" type="image/x-icon">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+   <link rel="stylesheet" href="assets/css/styles.css">
+
+   <title>MELICO – Rólunk</title>
+</head>
+<body>
+
+<!--==================== HEADER ====================-->
+<header class="header" id="header">
+   <nav class="nav container">
+      <a href="index.html" class="nav__logo">
+         <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+      </a>
+
+      <div class="nav__menu" id="nav-menu">
+         <ul class="nav__list">
+            <li class="nav__item">
+               <a href="index.html" class="nav__link">Főoldal</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="termekeink.html" class="nav__link">Termékeink</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="rolunk.html" class="nav__link active-link">Rólunk</a>
+            </li>
+
+            <li class="nav__item">
+               <a href="kapcsolatfelvetel.html" class="nav__link">Kapcsolatfelvétel</a>
+            </li>
+
+            <li class="nav__item" id="nav-login-item">
+                  <a href="signIn.html" id="signInBtn" class="nav__signin button">
+                        Bejelentkezés
+                  </a>
+               </li>
+
+               <li class="nav__item" id="nav-user-item" style="display: none;">
+                  <div class="nav__profile-container">
+                        <i class="ri-account-circle-fill nav__profile-icon" id="profileIcon"></i>
+                        
+                        <div class="nav__dropdown" id="profileDropdown">
+                           <span id="user-email-display" class="nav__dropdown-email"></span>
+                           <hr>
+                           <a href="adatok.html" class="nav__dropdown-link">
+                              <i class="ri-file-list-3-line"></i> Adatok
+                           </a>
+                           <a href="#" class="nav__dropdown-link" id="logoutBtn">
+                              <i class="ri-logout-box-r-line"></i> Kijelentkezés
+                           </a>
+                        </div>
+                  </div>
+               </li>
+         </ul>
+
+         <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+         </div>
+
+        <img src="assets/img/cheese2.png" alt="image" class="nav__img-1">
+        <img src="assets/img/cheese1.png" alt="image" class="nav__img-2">
+      </div>
+
+      <div class="nav__toggle" id="nav-toggle">
+         <i class="ri-menu-fill"></i>
+      </div>
+   </nav>
+</header>
+
+<!--==================== MAIN ====================-->
+<main class="main">
+<img src="assets/img/Rólunk-bg.png" alt="image" class="home__bg">
+
+<!--==================== RÓLUNK ====================-->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Rólunk</h2>
+
+         <p class="about__description">
+            A MELICO egy prémium minőségű kézműves sajtokra specializálódott webáruház,
+            amelynek célja, hogy a különleges gasztronómiai élményeket kereső vásárlók
+            számára egyszerűen, gyorsan és biztonságosan tegye elérhetővé
+            a legjobb hazai és nemzetközi sajtokat.
+         </p>
+
+         <p class="about__description">
+            Hiszünk abban, hogy egy igazán jó sajt nem csupán egy termék,
+            hanem élmény is. Az alapanyagok minősége, az érlelés módja
+            és a gondos szállítás mind hozzájárulnak ahhoz,
+            hogy vásárlóink valódi prémium minőséget kapjanak.
+         </p>
+      </div>
+
+      <img src="assets/img/about-melico.jpg" alt="MELICO manufaktúra" class="about-img">
+   </div>
+</section>
+
+<!--==================== SAJTJAINK ====================-->
+<section class="about section about--reverse">
+   <div class="about__container container grid">
+
+      <img src="assets/img/cheese3.png" alt="Kézműves sajtok" class="about-img">
+
+      <div class="about__data">
+         <h2 class="section__title">Termékeink</h2>
+
+         <p class="about__description">
+            Kínálatunkban gondosan válogatott kézműves sajtok szerepelnek,
+            amelyek hagyományos receptek alapján, természetes alapanyagokból készülnek.
+            A friss lágy sajtoktól kezdve az érlelt, karakteres ízvilágú különlegességekig
+            mindenki megtalálhatja a számára tökéletes választást.
+         </p>
+
+         <p class="about__description">
+            Fontos számunkra az állandó minőség, ezért kizárólag megbízható
+            termelőkkel dolgozunk együtt, akik számára a sajt nem tömegtermék,
+            hanem szenvedély.
+         </p>
+      </div>
+   </div>
+</section>
+
+<!--==================== BESZÁLLÍTÓK ====================-->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Beszállítóink</h2>
+
+         <p class="about__description">
+            A MELICO beszállítói között kis családi gazdaságok és elismert
+            sajtműhelyek egyaránt megtalálhatók. Közös bennük a minőség iránti
+            elkötelezettség és a hagyományos sajtészítési technikák tisztelete.
+         </p>
+
+         <p class="about__description">
+            Partnereinkkel szoros kapcsolatot ápolunk, így pontosan tudjuk,
+            honnan származik minden egyes termék, és biztosítani tudjuk
+            a folyamatos, megbízható ellátást.
+         </p>
+      </div>
+
+      <img src="assets/img/Beszállítóink.jpg" alt="Sajt beszállítók" class="about-img">
+   </div>
+</section>
+
+<!--==================== SZÁLLÍTÁS ====================-->
+<section class="about section about--reverse">
+   <div class="about__container container grid">
+
+      <img src="assets/img/MELICO Beszállítói furgon.png" alt="Szállítás" class="about-img">
+
+      <div class="about__data">
+         <h2 class="section__title">Szállítás és frissesség</h2>
+
+         <p class="about__description">
+            A sajtok minőségének megőrzése kiemelten fontos számunkra,
+            ezért a rendeléseket gondosan csomagolva, ellenőrzött körülmények között
+            juttatjuk el vásárlóinkhoz.
+         </p>
+
+         <p class="about__description">
+            Saját kiszállítási rendszerünk lehetővé teszi,
+            hogy a rendelés minden lépése nyomon követhető legyen,
+            így a termékek frissen és biztonságosan érkeznek meg.
+         </p>
+      </div>
+   </div>
+</section>
+
+<!--==================== VÁSÁRLÓI ÉLMÉNY ====================-->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Vásárlói élmény</h2>
+
+         <p class="about__description">
+            Webáruházunkat úgy alakítottuk ki, hogy a vásárlás gyors,
+            átlátható és kényelmes legyen. A részletes termékleírások,
+            vásárlói vélemények és egyszerű rendelési folyamat
+            mind ezt a célt szolgálják.
+         </p>
+
+         <p class="about__description">
+            Legyen szó egy különleges vacsoráról, ajándékról vagy
+            mindennapi gasztronómiai élvezetről, a MELICO-nál
+            biztos lehet benne, hogy minőségi sajtot választ.
+         </p>
+
+         <a href="termekeink.html" class="button">Termékeink megtekintése</a>
+      </div>
+
+      <img src="assets/img/Vásárlói élmény.jpg" alt="Vásárlói élmény" class="about-img">
+   </div>
+</section>
+
+</main>
+
+<!--==================== FOOTER ====================-->
+<footer class="footer">
+   <div class="footer__container container grid">
+      <div>
+         <a href="index.html" class="footer__logo">MELICO</a>
+         <p class="footer__description">
+            Kézműves sajtok <br> közvetlenül a manufaktúrából
+         </p>
+      </div>
+   </div>
+
+   
+   <span class="footer__copy">
+      &#169; 2026 MELICO. Minden jog fenntartva.
+   </span>
+</footer>
+
+
+<!--========== SCROLL UP ==========-->
+   <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-line"></i>
+   </a>
+
+<script src="assets/js/scrollreveal.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
