@@ -1,4 +1,4 @@
-## Melico
+## Melico Sajtmanufaktúra
 
 ## Projektmunka tagjai:
 - Papp Ádám
