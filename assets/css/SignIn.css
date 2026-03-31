@@ -1,1 +1,105 @@
+/*=============== GOOGLE FONT BETÖLTÉSE ===============*/
+/*
+  A Montserrat betűtípus importálása a Google Fonts szolgáltatásból.
+  Többféle vastagság (300–700) kerül betöltésre a rugalmas tipográfiához.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
+
+/*=============== ALAP RESET ===============*/
+/*
+  Minden elem alapértelmezett margó és padding eltávolítása,
+  valamint egységes box modell (border-box) használata.
+*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/*=============== OLDAL HÁTTÉR ÉS ELRENDEZÉS ===============*/
+/*
+  - Teljes képernyős háttérkép
+  - Flexbox középre igazítás (login panel középen)
+*/
+body{
+    background-image: url("../../assets/img/home-melico.png"); /* ide a kép elérési útja */
+    background-size: cover;      /* kitölti a teljes képernyőt */
+    background-position: center; /* középre igazítja */
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
+/*=============== FŐ KONTAINER (KÁRTYA) ===============*/
+/*
+  A login / regisztráció panel fő doboza.
+
+  - Lekerekített sarkok
+  - Árnyék → kiemelés
+  - Fix szélesség + reszponzív max-width
+*/
+.container{
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+}
+
+
+/*=============== SZÖVEG ELEMEK ===============*/
+.container p{
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    margin: 20px 0;
+}
+
+.container span{
+    font-size: 12px;
+}
+
+.container a{
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+}
+
+
+
+/*=============== GOMBOK ===============*/
+/*
+  - Narancs brand szín
+  - Lekerekített forma
+  - Hover interakció külön osztállyal
+*/
+.container button{
+    background-color: #ac5c00;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Átlátszó gomb variáció */
+.container button.hidden{
+    background-color: transparent;
+    border-color: #fff;
+}
