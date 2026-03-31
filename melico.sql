@@ -166,3 +166,22 @@ INSERT INTO SUPPLIERS (id, name, contact, email, phone, description) VALUES
 (7, 'Chili Suli', 'Fodor Bence', 'fodor.bence@chili.hu', '+36 30 777 8899', 'Fűszeres, különleges sajtok gyártója, prémium chili felhasználásával.'),
 (8, 'Zalai Tejtermék', 'Molnár Péter', 'molnar.peter@zalatej.hu', '+36 20 444 5566', 'Friss, puha sajtok specialistája (mozzarella, krémsajt).'),
 (9, 'Kisalföldi Gazdaság', 'Szabó Virág', 'szabo.virag@kfold.hu', '+36 70 999 0011', 'Holland típusú sajtokat gyártó modern üzem.');
+
+-- Termékek feltöltése képhivatkozásokkal
+INSERT INTO PRODUCTS (id, category_id, supplier_id, name, description, price, image, stock) VALUES
+(1, 1, 1, 'Camembert de Normandie AOP', NULL, 2500, 'Camembert de Normandie AOP.png', 85),
+(2, 1, 2, 'Chevre Frais', NULL, 3100, 'Chevre Frais.png', 60),
+(3, 1, 3, 'Gorgonzola Dolce DOP', NULL, 4800, 'Gorgonzola Dolce DOP.png', 45),
+(4, 1, 2, 'Ricotta', NULL, 2900, 'Ricotta.png', 95),
+(5, 2, 1, 'Trappista', NULL, 3300, 'Trappista.png', 70),
+(6, 2, 3, 'Gouda Holland', NULL, 2100, 'Gouda Holland.png', 120),
+(7, 3, 4, 'Parmigiano Reggiano DOP', NULL, 6500, 'Parmigiano Reggiano DOP.png', 30),
+(8, 3, 4, 'Grana Padano DOP', NULL, 7200, 'Grana Padano DOP.png', 25),
+(9, 2, 5, 'Edami', NULL, 4900, 'Edami.png', 40),
+(10, 1, 6, 'Mozzarella di Bufala Campana DOP', NULL, 2300, 'Mozzarella di Bufala Campana DOP.png', 110),
+(11, 3, 7, 'Pecorino Romano DOP', NULL, 5900, 'Pecorino Romano DOP.png', 50),
+(12, 1, 8, 'Mascarpone', NULL, 1900, 'Mascarpone.png', 150),
+(13, 2, 9, 'Maasdam', NULL, 3800, 'Maasdam.png', 65),
+(14, 1, 2, 'Brie de Meaux AOP', NULL, 2700, 'Brie de Meaux AOP.png', 80),
+(15, 1, 3, 'Burrata', NULL, 5500, 'Burrata.png', 35),
+(16, 3, 7, 'Comté AOP', NULL, 6900, 'Comté AOP.png', 20);
