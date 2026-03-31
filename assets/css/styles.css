@@ -1,1 +1,142 @@
+/*=============== GOOGLE FONTS ===============*/
+/*
+  Két betűtípus betöltése:
+  - Montserrat → alap szöveg (modern, jól olvasható)
+  - Dancing Script → dekoratív címekhez
+*/
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap");
 
+
+
+/*=============== CSS VÁLTOZÓK (DESIGN SYSTEM) ===============*/
+/*
+  Globális változók definiálása:
+  - színek
+  - betűméretek
+  - betűvastagságok
+  - z-index értékek
+
+  Előnye:
+  → könnyen módosítható teljes design egy helyen
+*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== SZÍNEK ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --first-color: hsl(28, 88%, 62%);               /* fő brand szín */
+  --first-color-alt: hsl(28, 84%, 58%);           /* hover/alternatív */
+  --title-color: hsl(0, 0%, 95%);                 /* címek */
+  --text-color: hsl(0, 0%, 75%);                  /* normál szöveg */
+  --text-color-light: hsl(0, 0%, 65%);            /* halvány szöveg */
+  --black-color: hsl(0, 0%, 6%);
+  --body-color: hsl(0, 0%, 6%);
+  --container-color: hsl(0, 0%, 10%);
+
+
+
+  /*========== TIPOGRÁFIA ==========*/
+  --body-font: "Montserrat", sans-serif;
+  --second-font: "Dancing Script", cursive;
+
+  /* Betűméretek */
+  --biggest-font-size: 3rem;
+  --bigger-font-size: 2rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .813rem;
+
+  /*========== BETŰVASTAGSÁGOK ==========*/
+  --font-regular: 400;
+  --font-semi-bold: 600;
+  --font-bold: 700;
+
+  /*========== RÉTEGKEZELÉS (Z-INDEX) ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+
+  /*========== KÉSZLET SZÍNEK ==========*/
+  /*
+    Később használható pl.:
+    - raktárkészlet jelzés (zöld/sárga/piros)
+  */
+  --stock-green: hsl(140, 60%, 45%);
+  --stock-yellow: hsl(45, 95%, 55%);
+  --stock-red: hsl(0, 75%, 55%);
+}
+
+/*=============== RESZPONZÍV TIPOGRÁFIA ===============*/
+/*
+  Nagy képernyőn (1150px felett):
+  - nagyobb betűméretek → jobb olvashatóság
+*/
+@media screen and (min-width: 1150px) {
+  :root {
+    --biggest-font-size: 5rem;
+    --bigger-font-size: 3rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+  }
+}
+
+/*=============== BASE (ALAP STÍLUSOK) ===============*/
+/*
+  Reset + alap viselkedés minden elemre.
+*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Alap font beállítás */
+body,
+button {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+}
+
+/* Oldal háttér és szöveg */
+body {
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+
+/* Gomb alap reset */
+button {
+  border: none;
+  outline: none;
+}
+
+/* Címek */
+h1, h2, h3, h4 {
+  color: var(--title-color);
+  font-weight: var(--font-bold);
+}
+
+/* Lista */
+ul {
+  list-style: none;
+}
+
+/* Link */
+a {
+  text-decoration: none;
+}
+
+/* Képek */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
