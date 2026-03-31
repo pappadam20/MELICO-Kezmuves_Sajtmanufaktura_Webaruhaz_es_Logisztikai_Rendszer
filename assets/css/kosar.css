@@ -1,1 +1,145 @@
+/*=============== HÁTTÉR ===============*/
+/*
+  Ez a stílus a teljes oldal (body) alap viselkedését szabályozza.
+  
+  - A position: relative; lehetővé teszi, hogy a body-n belüli elemek
+    abszolút pozicionálása ehhez az elemhez viszonyítva történjen.
+  
+  - Az overflow-x: hidden; megakadályozza a vízszintes görgetést,
+    így az esetlegesen túlnyúló elemek nem okoznak layout hibát
+    vagy nem jelennek meg kilógva a képernyőn.
+*/
+body {
+    position: relative;
+    overflow-x: hidden;
+}
 
+
+
+/*=============== HÁTTÉR KÉP (PSEUDO-ELEM) ===============*/
+/*
+  A body::before pszeudo-elem egy háttérréteget hoz létre a teljes oldal mögött.
+  
+  - A content: "" szükséges ahhoz, hogy a pszeudo-elem megjelenjen.
+  
+  - A position: fixed; biztosítja, hogy a háttér a képernyőhöz rögzítve maradjon,
+    így görgetéskor nem mozdul el (parallax-szerű hatás).
+  
+  - Az inset: 0; azt jelenti, hogy minden irányban (top, right, bottom, left)
+    0 távolságra van, tehát kitölti a teljes képernyőt.
+  
+  - A z-index: -1; a háttér az összes tartalom mögé kerül.
+  
+  - A background-image; beállítja a használt háttérképet.
+  
+  - A background-repeat: no-repeat; megakadályozza a kép ismétlődését.
+  
+  - A background-size: cover; a kép arányosan kitölti a teljes területet.
+  
+  - A background-position: center center; középre igazítja a képet vízszintesen és függőlegesen is.
+*/
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    background-image: url("../img/KosarHatter.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+
+
+/*=============== KOSÁR CÍM FORMÁZÁSA ===============*/
+/*
+  Ez a stílus a kosár oldal fő címének (pl. "Kosár") megjelenését szabályozza.
+
+  - A fehér szöveg (color) biztosítja a jó kontrasztot a sötét háttér előtt.
+
+  - A háttér (background-color) félig átlátszó fekete,
+    így a mögötte lévő kép halványan látható marad,
+    miközben a szöveg jól olvasható.
+
+  - A display: block; lehetővé teszi, hogy a margin: auto középre igazítsa az elemet.
+
+  - A padding belső térközt ad a szöveg köré,
+    így a cím "dobozos" megjelenést kap.
+
+  - A border-radius lekerekíti a sarkokat,
+    ami modernebb, esztétikusabb kinézetet biztosít.
+
+  - A text-align: center; középre igazítja a szöveget az elemen belül.
+
+  - A margin: 0 auto 2rem auto;:
+        top: 0
+        jobb-bal: auto → középre igazítás
+        bottom: 2rem → térköz az alatta lévő elemtől
+
+  - A font-size növeli a cím méretét, így kiemeltebb lesz.
+*/
+.section__title {
+    color: #ffffff; /* fehér szöveg */
+    background-color: rgba(0, 0, 0, 0.589); /* félig átlátszó háttér */
+    display: inline-block; /* a háttér csak a szöveg mögé kerül */
+    padding: 0.5rem 1rem; /* belső margó */
+    border-radius: 0.5rem; /* lekerekített sarkok */
+    text-align: center; /* szöveg középre */
+    margin: 0 auto 2rem auto; /* középre helyezés blokk szinten */
+    font-size: 2rem; /* nagyobb cím, opcionális */
+    display: block; /* margin auto működéséhez szükséges */
+}
+
+
+
+
+
+/*=============== KOSÁR OLDAL EGYEDI STÍLUSOK ===============*/
+/*
+  Ez a szekció a kosár oldal teljes megjelenéséért felel:
+  - elrendezés
+  - táblázat stílus
+  - gombok
+  - összegzés
+  - üres kosár állapot
+*/
+
+
+/*=============== KOSÁR SZEKCIÓ ===============*/
+/*
+  A teljes kosár blokk külső térközei.
+
+  - A felső padding nagyobb (8rem), hogy legyen hely a fix header alatt.
+  - Az alsó padding kisebb (4rem), hogy megfelelő térköz legyen az oldal végén.
+*/
+.cart__section {
+    padding-block: 8rem 4rem; /* Hely a fix header alatt */
+}
+
+
+
+/*=============== KONTÉNER (KÁRTYA STÍLUS) ===============*/
+/*
+  A kosár tartalmát egy "kártya" jellegű dobozba helyezi.
+
+  - Világos háttér + árnyék → kiemelés a háttérből
+  - Lekerekített sarkok → modern UI
+  - Hover esetén szegély kiemelés → interaktivitás
+  - max-width + margin auto → középre igazítás
+*/
+.cart__container {
+    background-color: #ffb55af3; /* fehér háttér */
+    padding: 2.5rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 12px 32px hsl(0, 0%, 100%);
+    border: 2px solid transparent;
+    transition: border .4s;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Hover effekt – kiemeli a konténert */
+.cart__container:hover {
+    border-color: var(--first-color);
+}
