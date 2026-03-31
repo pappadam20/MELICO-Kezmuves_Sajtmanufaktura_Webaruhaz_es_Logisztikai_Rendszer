@@ -113,3 +113,16 @@ CREATE TABLE IF NOT EXISTS NOTIFICATIONS (
     -- Kapcsolat: Ha törlik a felhasználót, az értesítései is törlődnek (CASCADE)
     FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
 );
+
+
+-- TÁBLA: USER_COUPONS; Leírás: Nyilvántartja, melyik felhasználó melyik kupont használta fel.
+CREATE TABLE IF NOT EXISTS USER_COUPONS (
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- Bejegyzés azonosítója
+    user_id INT NOT NULL,               -- Felhasználó azonosítója
+    coupon_id INT NOT NULL,             -- Megszerzett kupon azonosítója
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,    -- Mikor kapta meg a felhasználó
+    used TINYINT DEFAULT 0,                             -- Felhasználta-e már? (0: nem, 1: igen)
+    -- Kapcsolatok kényszerített törléssel (CASCADE):
+    FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE,
+    FOREIGN KEY (coupon_id) REFERENCES COUPONS(id) ON DELETE CASCADE
+);
