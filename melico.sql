@@ -148,3 +148,9 @@ INSERT INTO USERS (id, name, profile_name, location, email, password, role) VALU
 (1, 'Admin Péter', 'Admin', 'Budapest 1055 Kossuth Lajos tér 1.', 'admin@melico.hu', '$2y$10$A2N0tcUCU3.pfTIWr0sLuOIu/zL.wRYPb.fncs7RlT7FsiVkTgJr.', '2'),
 (2, 'Futár Károly', 'Futár', 'Debrecen 4024 Piac utca 10.', 'futar@melico.hu', '$2y$10$lvbfmLgUOTTWJYSHbO7dC.FDIahhT7u8.B1tcu3nP0KspDz.jFh2C', '1'),
 (3, 'Vásárló Zita', 'Zita', 'Szeged 6720 Dóm tér 12.', 'vasarlo@melico.hu', '$2y$10$/ZHQwARpNhgl2UDfL45LnuqvMhfhwFwBU9FwkraYiYfcEKRr3IhWq', '0');
+
+-- Kategóriák betöltése
+INSERT INTO CATEGORIES (id, name, description) VALUES
+(1, 'Lágy és Friss Sajtok', 'Rövid érlelésű, magas nedvességtartalmú sajtok.'),
+(2, 'Félkemény Sajtok', 'Közepes ideig érlelt, jól szeletelhető sajtok.'),
+(3, 'Kemény Sajtok', 'Hosszú érlelésű, alacsony nedvességtartalmú, reszelhető vagy törhető sajtok.');
