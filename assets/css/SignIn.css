@@ -285,3 +285,25 @@ body{
 .container.active .toggle-right{
     transform: translateX(200%);
 }
+
+
+
+/*=============== VISSZA GOMB (BTMP) ===============*/
+/*
+  Bal felső sarokban elhelyezett navigációs link.
+*/
+.BTMP {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #fffb00;
+    font-weight: 600;
+    font-size: 14px;
+    font-weight: 1000;
+}
+
+/* Hover effekt */
+.BTMP:hover {
+    text-decoration: underline;
+}
