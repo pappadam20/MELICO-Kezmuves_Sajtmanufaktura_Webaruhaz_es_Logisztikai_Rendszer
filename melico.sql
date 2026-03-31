@@ -90,3 +90,14 @@ CREATE TABLE IF NOT EXISTS REVIEWS (
     FOREIGN KEY (user_id) REFERENCES USERS(id),
     FOREIGN KEY (product_id) REFERENCES PRODUCTS(id)
 );
+
+
+-- TÁBLA: COUPONS; Leírás: Kedvezménykódok kezelése korlátozásokkal.
+CREATE TABLE IF NOT EXISTS COUPONS (
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- Kupon belső azonosítója
+    code VARCHAR(20) NOT NULL UNIQUE,   -- A kuponkód
+    discount INT NOT NULL DEFAULT 10,   -- Kedvezmény mértéke százalékban
+    valid_until DATETIME,               -- A kupon érvényességének vége
+    max_items INT DEFAULT 1,         -- Maximum hány termékre érvényesíthető a kosárban
+    usage_limit INT DEFAULT 1        -- Összesen hányszor használható fel a rendszerben
+);
