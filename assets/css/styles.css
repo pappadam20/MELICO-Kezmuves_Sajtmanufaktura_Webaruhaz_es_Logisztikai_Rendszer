@@ -230,3 +230,251 @@ img {
   color: var(--title-color);
   cursor: pointer;
 }
+
+
+/*=============== OLDAL NAVIGÁCIÓ ===============*/
+/*
+  Oldalak közötti navigáció (pl. menü linkek).
+*/
+.page-nav {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 1120px; /* ugyanaz, mint a .container */
+  margin: 2.5rem auto; /* középre */
+  padding: 0 1.5rem;
+}
+
+/* Linkek tördelésének megakadályozása */
+.page-nav .nav__link {
+  white-space: nowrap;
+}
+
+
+/*=============== MOBIL NAVIGÁCIÓ ===============*/
+/*
+  Mobil nézetben csúszó menü.
+*/
+@media screen and (max-width: 1150px){
+  .nav__menu{
+    position: fixed;
+    top: 0;
+    right: -100%;   /* alapból rejtve */
+    background-color: hsla(0, 0%, 6%, .2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    width: 80%;
+    height: 100%;
+    padding: 6rem 3rem 0;
+    transition: right .4s;
+  }
+}
+
+
+
+/*=============== TABLET / MOBIL NAV ===============*/
+/*
+  Kisebb képernyőn a navigáció törik.
+*/
+@media screen and (max-width: 768px) {
+  .page-nav {
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+}
+
+
+/*=============== NAVIGÁCIÓ, FŐOLDAL ÉS KOMPONENSEK STÍLUSAI ===============*/
+
+/* Navigációs lista (mobil nézetben függőleges elrendezés, térközzel) */
+.nav__list{
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.5rem;
+}
+
+/* Navigációs linkek alap stílusa */
+.nav__link{
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  transition: color .4s;
+}
+
+/* Hover effekt a linkeken */
+.nav__link:hover{
+  color: var(--first-color);
+}
+
+/* Navigációs elemek abszolút pozicionálása */
+.nav__close,
+.nav__img-1,
+.nav__img-2{
+  position: absolute;
+}
+
+/* Menü bezáró ikon helye */
+.nav__close{
+  top: 1rem;
+  right: 1.5rem;
+}
+
+/* Dekoratív képek elhelyezése a menüben */
+.nav__img-1{
+  width: 80px;
+  top: 11rem;
+  right: .75rem;
+}
+
+.nav__img-2{
+  width: 70px;
+  top: 20rem;
+  right: 6rem;
+}
+
+
+/* Menü megjelenítése (jobbról becsúszik) */
+.show-menu{
+  right: 0;
+}
+
+/* Elmosott (blur) fejléc effekt */
+.blur-header::after{
+  content: '';
+  position: absolute;
+  width: 1000%;
+  height: 100%;
+  background-color: hsla(0, 0%, 6%, .2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px); /* Safari támogatás */
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Aktív navigációs link kiemelése */
+.active-link{
+  color: var(--first-color);
+}
+
+
+
+/*=============== HOME SZEKCIÓ ===============*/
+
+/* Főoldal szekció alap beállítás */
+.home{
+  position: relative;
+  padding-top: 6.5rem;
+}
+
+/* Konténer térköz */
+.home__container{
+  row-gap: 2rem;
+}
+
+/* Háttér és árnyék rétegek */
+.home__bg,
+.home__shadow{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Háttérkép beállítás */
+.home__bg{
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Sötét átmenetes árnyék a jobb olvashatóságért */
+.home__shadow{
+  background: linear-gradient(180deg,
+              hsla(0, 0%, 0%, 0) 0%,
+              hsl(0, 0%, 6%) 100%);
+}
+
+/* Szöveges tartalom középre igazítva */
+.home__data{
+  position: sta;
+  text-align: center;
+}
+
+/* Főcím stílus */
+.home__title{
+  font-size: 3.0rem;
+  font-family: var(--second-font);
+  margin-bottom: 1.5rem;
+  line-height: 1.41;
+}
+
+/* Dekoratív sajt ikon */
+.home__cheese{
+  width: 50px;
+  position: absolute;
+  top: 15rem;
+  left: 4rem;
+}
+
+/* Központi kép konténer */
+.home__image{
+  max-width: 400px;
+  justify-self: center;
+}
+
+/* Kép elforgatása */
+.home__img{
+  rotate: 15deg;
+}
+
+/* Footer elemek flex elrendezésben */
+.home__footer,
+.home__location,
+.home__social{
+  display: flex;
+}
+
+/* Footer igazítás */
+.home__footer{
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Lokáció blokk */
+.home__location{
+  align-items: center;
+  column-gap: .5rem;
+}
+
+/* Lokáció ikon */
+.home__location i{
+  font-size: 1.5rem;
+  color: var(--first-color);
+}
+
+/* Lokáció szöveg */
+.home__location span{
+  color: var(--title-color);
+  font-size: var(--small-font-size);
+}
+
+/* Social ikonok */
+.home__social{
+  column-gap: 1rem;
+}
+
+/* Social linkek */
+.home__social a{
+  color: var(--title-color);
+  font-size: 1.5rem;
+  transition: color .4s;
+}
+
+/* Hover effekt social ikonokon */
+.home__social a:hover{
+  color: var(--first-color);
+}
