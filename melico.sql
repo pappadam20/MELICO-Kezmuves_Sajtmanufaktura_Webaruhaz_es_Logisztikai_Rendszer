@@ -22,3 +22,14 @@ CREATE TABLE IF NOT EXISTS CATEGORIES (
     name VARCHAR(50),   -- Kategória neve
     description TEXT    -- Kategória rövid leírása
 );
+
+
+-- TÁBLA: SUPPLIERS; Leírás: A beszállító partnerek és manufaktúrák adatai.
+CREATE TABLE IF NOT EXISTS SUPPLIERS (
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- Beszállító egyedi azonosítója
+    name VARCHAR(100),              -- A cég vagy manufaktúra neve
+    contact VARCHAR(100),           -- Kapcsolattartó személy neve
+    email VARCHAR(100) NOT NULL,    --Beszállító központi email címe
+    phone VARCHAR(20),              -- Beszállító telefonszáma
+    description TEXT    -- Bemutatkozó szöveg
+);
