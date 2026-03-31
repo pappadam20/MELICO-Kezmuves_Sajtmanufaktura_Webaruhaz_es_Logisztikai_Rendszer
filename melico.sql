@@ -65,3 +65,16 @@ CREATE TABLE IF NOT EXISTS ORDERS (
     -- Kapcsolat a felhasználóval:
     FOREIGN KEY (user_id) REFERENCES USERS(id)
 );
+
+
+-- TÁBLA: ORDER_ITEMS; Leírás: Kapcsolótábla a rendelések és termékek között (tételek).
+CREATE TABLE IF NOT EXISTS ORDER_ITEMS (
+    id INT PRIMARY KEY AUTO_INCREMENT,      -- Tétel egyedi azonosítója
+    order_id INT,                           -- Melyik rendeléshez tartozik?
+    product_id INT,                         -- Melyik terméket vették meg?
+    quantity INT,                           -- Vásárolt darabszám
+    sale_price INT,                         -- Rögzített ár (vásárláskori ár, nem változik ha később drágul a termék)
+    -- Kapcsolatok a rendeléssel és a termékkel:
+    FOREIGN KEY (order_id) REFERENCES ORDERS(id),
+    FOREIGN KEY (product_id) REFERENCES PRODUCTS(id)
+);
