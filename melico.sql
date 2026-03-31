@@ -78,3 +78,15 @@ CREATE TABLE IF NOT EXISTS ORDER_ITEMS (
     FOREIGN KEY (order_id) REFERENCES ORDERS(id),
     FOREIGN KEY (product_id) REFERENCES PRODUCTS(id)
 );
+
+
+-- TÁBLA: REVIEWS; Leírás: Felhasználói értékelések (1-5 csillag).
+CREATE TABLE IF NOT EXISTS REVIEWS (
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- Értékelés egyedi azonosítója
+    user_id INT,                        -- Ki írta az értékelést
+    product_id INT,                        -- Melyik terméket értékelték
+    stars ENUM('1','2','3','4','5'),       -- Pontszám 1-től 5-ig
+    -- Kapcsolatok:
+    FOREIGN KEY (user_id) REFERENCES USERS(id),
+    FOREIGN KEY (product_id) REFERENCES PRODUCTS(id)
+);
