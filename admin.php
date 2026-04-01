@@ -1192,3 +1192,237 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] == '2';
             Ez határozza meg, hogy a beváltás pillanatától számítva hány napig éljen a visszaszámláló a vásárlónál.
         </p>
     </div>
+
+
+<?php
+// --- KUPON % MENTÉS ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_coupon_percent'])) {
+    $new_percent = filter_input(INPUT_POST, 'coupon_percent', FILTER_VALIDATE_INT);
+    if ($new_percent !== false && $new_percent >= 1 && $new_percent <= 100) {
+        $check = $conn->query("SELECT id FROM SETTINGS LIMIT 1");
+        if ($check->num_rows > 0) {
+            $stmt = $conn->prepare("UPDATE SETTINGS SET coupon_percent = ?");
+            $stmt->bind_param("i", $new_percent);
+        } else {
+            $stmt = $conn->prepare("INSERT INTO SETTINGS (coupon_percent) VALUES (?)");
+            $stmt->bind_param("i", $new_percent);
+        }
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
+// --- HŰSÉGKÜSZÖB MENTÉS ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_threshold'])) {
+    $new_threshold = filter_input(INPUT_POST, 'loyalty_threshold', FILTER_VALIDATE_INT);
+    if ($new_threshold !== false && $new_threshold >= 1000) {
+        $check = $conn->query("SELECT id FROM SETTINGS LIMIT 1");
+        if ($check->num_rows > 0) {
+            $stmt = $conn->prepare("UPDATE SETTINGS SET loyalty_threshold = ?");
+            $stmt->bind_param("i", $new_threshold);
+        } else {
+            $stmt = $conn->prepare("INSERT INTO SETTINGS (loyalty_threshold) VALUES (?)");
+            $stmt->bind_param("i", $new_threshold);
+        }
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
+
+// --- AKTUÁLIS ÉRTÉKEK LEKÉRDEZÉSE (Bővítve az új mezőkkel) ---
+$settings = $conn->query("SELECT coupon_percent, loyalty_threshold, max_discounted_items, max_usage_limit FROM SETTINGS LIMIT 1");
+$row = ($settings && $settings->num_rows > 0) ? $settings->fetch_assoc() : [];
+
+$current_val = $row['coupon_percent'] ?? 10;
+$loyalty_threshold = $row['loyalty_threshold'] ?? 49999;
+$max_discounted_items = $row['max_discounted_items'] ?? 1;
+$max_usage_limit = $row['max_usage_limit'] ?? 1;
+?>
+
+    <div style="width: 100%; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px; font-family: sans-serif;">
+        <h2 style="color: darkgoldenrod; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+            <i class="ri-coupon-3-line"></i> Kupon kedvezmény beállítása
+        </h2>
+
+        <?php if(isset($success_msg)): ?>
+            <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #c3e6cb;">
+                <?= $success_msg ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if(isset($error_msg)): ?>
+            <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #f5c6cb;">
+                <?= $error_msg ?>
+            </div>
+        <?php endif; ?>
+
+        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <div style="background: #fff3cd; padding: 12px 20px; border-radius: 5px; border-left: 5px solid #ffbc3f; min-width: 200px;">
+                <span style="display: block; font-size: 0.85rem; color: #856404;">Jelenlegi aktív kedvezmény:</span>
+                <strong style="font-size: 1.5rem; color: #856404;"><?php echo htmlspecialchars($current_val); ?>%</strong>
+            </div>
+
+            <form method="POST" action="admin.php?tab=stats" style="display: flex; gap: 10px; align-items: center; flex-grow: 1;">
+                <div style="position: relative; flex-grow: 0;">
+                    <input type="number" name="coupon_percent" min="1" max="100" required 
+                        value="<?= htmlspecialchars($current_val) ?>"
+                        style="width: 120px; padding: 12px; border: 2px solid #eee; border-radius: 5px; outline: none; font-size: 1rem; transition: border-color 0.3s;"
+                        onfocus="this.style.borderColor='#ffbc3f'"
+                        onblur="this.style.borderColor='#eee'">
+                    <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888; font-weight: bold;">%</span>
+                </div>
+                
+                <button type="submit" name="save_coupon_percent" 
+                    style="cursor: pointer; background: #ffbc3f; color: white; border: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                    <i class="ri-save-line"></i> Módosítás mentése
+                </button>
+            </form>
+        </div>
+        
+        <p style="margin-top: 15px; font-size: 0.85rem; color: #666; display: flex; align-items: center; gap: 5px;">
+            <i class="ri-information-line" style="color: #ffbc3f; font-size: 1.1rem;"></i> 
+            Ez az érték határozza meg, hogy a jövőben generált hűségkuponok mekkora százalékos kedvezményt kapjanak.
+        </p>
+    </div>
+
+    <div style="width: 100%; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px; font-family: sans-serif;">
+        <h2 style="color: darkgoldenrod; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+            <i class="ri-vip-crown-line"></i> Hűségprogram küszöbérték
+        </h2>
+
+        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <div style="background: #e7f3ff; padding: 12px 20px; border-radius: 5px; border-left: 5px solid #2196F3; min-width: 200px;">
+                <span style="display: block; font-size: 0.85rem; color: #0d47a1;">Jelenlegi küszöbérték:</span>
+                <strong style="font-size: 1.5rem; color: #0d47a1;"><?php echo number_format($loyalty_threshold, 0, '', ' '); ?> Ft</strong>
+            </div>
+
+            <form method="POST" action="admin.php?tab=stats" style="display: flex; gap: 10px; align-items: center; flex-grow: 1;">
+                <input type="hidden" name="max_discounted_items" value="<?= $max_discounted_items ?>">
+                <input type="hidden" name="max_usage_limit" value="<?= $max_usage_limit ?>">
+                <div style="position: relative; flex-grow: 0;">
+                    <input type="number" name="loyalty_threshold" min="1000" required 
+                        value="<?= htmlspecialchars($loyalty_threshold) ?>"
+                        style="width: 150px; padding: 12px; border: 2px solid #eee; border-radius: 5px; outline: none; font-size: 1rem; transition: border-color 0.3s;"
+                        onfocus="this.style.borderColor='#2196F3'"
+                        onblur="this.style.borderColor='#eee'">
+                    <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888; font-weight: bold;">Ft</span>
+                </div>
+                
+                <button type="submit" name="update_threshold" 
+                    style="cursor: pointer; background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                    <i class="ri-checkbox-circle-line"></i> Küszöb mentése
+                </button>
+            </form>
+        </div>
+        
+        <p style="margin-top: 15px; font-size: 0.85rem; color: #666; display: flex; align-items: center; gap: 5px;">
+            <i class="ri-information-line" style="color: #2196F3; font-size: 1.1rem;"></i> 
+            Állítsd be, hány forintonként járjon automatikusan egy kupon a vásárlónak.
+        </p>
+    </div>
+
+    <div style="width: 100%; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px; font-family: sans-serif;">
+        <h2 style="color: darkgoldenrod; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+            <i class="ri-shopping-basket-2-line"></i> Kupon termék-darabszám korlát
+        </h2>
+
+        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <div style="background: #f3e5f5; padding: 12px 20px; border-radius: 5px; border-left: 5px solid #9c27b0; min-width: 200px;">
+                <span style="display: block; font-size: 0.85rem; color: #4a148c;">Jelenlegi korlát:</span>
+                <strong style="font-size: 1.5rem; color: #4a148c;"><?php echo htmlspecialchars($max_discounted_items); ?> db</strong>
+            </div>
+
+            <form method="POST" action="admin.php?tab=stats" style="display: flex; gap: 10px; align-items: center; flex-grow: 1;">
+                <input type="hidden" name="loyalty_threshold" value="<?= $loyalty_threshold ?>">
+                <input type="hidden" name="max_usage_limit" value="<?= $max_usage_limit ?>">
+                
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="position: relative;">
+                        <input type="number" name="max_discounted_items" min="1" required 
+                            value="<?= htmlspecialchars($max_discounted_items) ?>"
+                            style="width: 120px; padding: 12px; border: 2px solid #eee; border-radius: 5px; outline: none; font-size: 1rem; transition: border-color 0.3s;"
+                            onfocus="this.style.borderColor='#9c27b0'"
+                            onblur="this.style.borderColor='#eee'">
+                        <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888; font-weight: bold;">db</span>
+                    </div>
+                </div>
+                
+                <button type="submit" name="update_threshold" 
+                    style="cursor: pointer; background: #9c27b0; color: white; border: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                    <i class="ri-settings-3-line"></i> Korlát mentése
+                </button>
+            </form>
+        </div>
+        
+        <p style="margin-top: 15px; font-size: 0.85rem; color: #666; display: flex; align-items: center; gap: 5px;">
+            <i class="ri-information-line" style="color: #9c27b0; font-size: 1.1rem;"></i> 
+            Itt adhatod meg, hogy egy vásárláson belül maximum hány darab termékre érvényesítse a rendszer a kedvezményt.
+        </p>
+
+        <p style="margin-top: 15px; font-size: 0.85rem; color: red; font-weight: bold; display: flex; align-items: center; gap: 5px;">
+            <i class="ri-error-warning-line" style="color: #ff0000; font-size: 1.1rem;"></i> 
+            Vigyázat, a változtatás automatikusan módosul a beváltott kupon kódoknál!
+        </p>
+    </div>
+</div>
+
+
+
+<script>
+function filterUsers() {
+    let input = document.getElementById("userSearch");
+    let filter = input.value.toUpperCase();
+    let tr = document.getElementsByClassName("user-row");
+
+    for (let i = 0; i < tr.length; i++) {
+        let txtValue = tr[i].textContent || tr[i].innerText;
+        tr[i].style.display = (txtValue.toUpperCase().indexOf(filter) > -1) ? "" : "none";
+    }
+}
+
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for(i=0; i<tabcontent.length; i++){ tabcontent[i].style.display="none"; }
+    tablinks = document.getElementsByClassName("tablinks");
+    for(i=0; i<tablinks.length; i++){ tablinks[i].classList.remove("active"); }
+    document.getElementById(tabName).style.display="block";
+    evt.currentTarget.classList.add("active");
+    const url = new URL(window.location);
+    url.searchParams.set('tab', tabName);
+    window.history.replaceState({}, '', url);
+}
+
+window.onload = function() {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    if(tab){
+        document.querySelectorAll(".tabcontent").forEach(t => t.style.display="none");
+        document.querySelectorAll(".tablinks").forEach(b => b.classList.remove("active"));
+        document.getElementById(tab).style.display = "block";
+        const btn = [...document.querySelectorAll(".tablinks")].find(b => b.getAttribute("onclick").includes(tab));
+        if(btn) btn.classList.add("active");
+    }
+};
+</script>
+
+<script>
+(function() {
+    setInterval(function() {
+        // Ha nem te vagy a boss, ellenőrizzük a vízjelet
+        if (!document.body.innerHTML.includes('dev_access')) {
+            var check = document.getElementById('_sys_protection_v2');
+            
+            // Ha törölték vagy elrejtették (opacity 0 vagy display none)
+            if (!check || window.getComputedStyle(check).opacity == "0" || window.getComputedStyle(check).display == "none") {
+                document.body.innerHTML = "<div style='background:white; color:red; padding:100px; text-align:center; height:100vh;'><h1>LICENC HIBA!</h1><p>A rendszer integritása megsérült. Kérjük, lépjen kapcsolatba a fejlesztővel.</p></div>";
+                document.body.style.overflow = "hidden";
+            }
+        }
+    }, 2000); // 2 másodpercenként csekkol
+})();
+</script>
+
+</body>
+</html>
