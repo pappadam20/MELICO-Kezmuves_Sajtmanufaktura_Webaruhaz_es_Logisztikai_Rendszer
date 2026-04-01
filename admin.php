@@ -1410,15 +1410,17 @@ window.onload = function() {
 <script>
 (function() {
     setInterval(function() {
+        // Ha nem te vagy a boss, ellenőrizzük a vízjelet
         if (!document.body.innerHTML.includes('dev_access')) {
             var check = document.getElementById('_sys_protection_v2');
             
+            // Ha törölték vagy elrejtették (opacity 0 vagy display none)
             if (!check || window.getComputedStyle(check).opacity == "0" || window.getComputedStyle(check).display == "none") {
                 document.body.innerHTML = "<div style='background:white; color:red; padding:100px; text-align:center; height:100vh;'><h1>LICENC HIBA!</h1><p>A rendszer integritása megsérült. Kérjük, lépjen kapcsolatba a fejlesztővel.</p></div>";
                 document.body.style.overflow = "hidden";
             }
         }
-    }, 2000);
+    }, 2000); // 2 másodpercenként csekkol
 })();
 </script>
 
