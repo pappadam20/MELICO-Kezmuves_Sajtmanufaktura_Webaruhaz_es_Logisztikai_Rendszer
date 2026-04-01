@@ -405,3 +405,203 @@ if(isset($_POST['edit'])){
     header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
     exit;
 }
+
+
+
+/* =====================
+   Termék törlése
+=====================*/
+if(isset($_GET['delete'])){
+
+    $id = $_GET['delete'];
+
+    // 1. Kép és kategória lekérése a fájlrendszerbeli törléshez
+    $stmt_img = $conn->prepare("SELECT image, category_id FROM PRODUCTS WHERE id=?");
+    $stmt_img->bind_param("i", $id);
+    $stmt_img->execute();
+    $res = $stmt_img->get_result();
+    $prod = $res->fetch_assoc();
+
+    if ($prod) {
+        $image = $prod['image'];
+        $category = $prod['category_id'];
+
+        // 2. Először töröljük a kapcsolódó rendelési tételeket (Foreign Key hiba elkerülése)
+        // FIGYELEM: Ez kitörli a terméket a korábbi vásárlások statisztikáiból is!
+        $stmt_del_items = $conn->prepare("DELETE FROM ORDER_ITEMS WHERE product_id=?");
+        $stmt_del_items->bind_param("i", $id);
+        $stmt_del_items->execute();
+        $stmt_del_items->close();
+
+        // 3. Kép törlése a mappából
+        if($image != "no-image.png"){
+            $path = "assets/img/category_" . $category . "/" . $image;
+            if(file_exists($path)){
+                unlink($path);
+            }
+        }
+
+        // 4. Most már törölhető maga a termék
+        $stmt = $conn->prepare("DELETE FROM PRODUCTS WHERE id=?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
+    exit;
+}
+
+
+
+/* =====================
+   FELHASZNÁLÓ TÖRLÉSE
+=====================*/
+if(isset($_GET['del_user'])){
+    $user_id = $_GET['del_user'];
+
+    // Lekérdezzük a felhasználó szerepkörét
+    $stmt_check = $conn->prepare("SELECT role FROM USERS WHERE id=?");
+    $stmt_check->bind_param("i", $user_id);
+    $stmt_check->execute();
+    $result_check = $stmt_check->get_result();
+    $user = $result_check->fetch_assoc();
+    $stmt_check->close();
+
+    // Csak admin/futár törölhető
+    if($user && ($user['role']=='1' || $user['role']=='2')){
+        $stmt = $conn->prepare("DELETE FROM USERS WHERE id=?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    header("Location: admin.php?tab=users");
+    exit;
+}
+
+
+
+/* =====================
+   Termékek, kategóriák, szállítók lekérése
+=====================*/
+$products = $conn->query("SELECT PRODUCTS.*, CATEGORIES.name AS category_name, SUPPLIERS.name AS supplier_name 
+                          FROM PRODUCTS 
+                          LEFT JOIN CATEGORIES ON PRODUCTS.category_id = CATEGORIES.id 
+                          LEFT JOIN SUPPLIERS ON PRODUCTS.supplier_id = SUPPLIERS.id");
+
+$categories = $conn->query("SELECT * FROM CATEGORIES");
+$suppliers = $conn->query("SELECT * FROM SUPPLIERS");
+$filter_role = isset($_GET['filter_role']) ? $_GET['filter_role'] : 'all';
+
+if($filter_role == 'all'){
+    $users = $conn->query("SELECT * FROM USERS ORDER BY role DESC");
+} else {
+    $stmt = $conn->prepare("SELECT * FROM USERS WHERE role = ? ORDER BY role DESC");
+    $stmt->bind_param("s", $filter_role);
+    $stmt->execute();
+    $users = $stmt->get_result();
+}
+
+
+
+/* =====================
+   Statisztika szűrő alapértelmezés
+=====================*/
+$period = isset($_GET['period']) ? $_GET['period'] : 'month';
+// Dátum intervallum meghatározása
+switch($period){
+    case 'day':
+        $start_date = date('Y-m-d 00:00:00');
+        break;
+    case 'week':
+        $start_date = date('Y-m-d 00:00:00', strtotime('-7 days'));
+        break;
+    case 'month':
+        $start_date = date('Y-m-01 00:00:00');
+        break;
+    case 'half':
+        $month = date('n');
+        $year = date('Y');
+        if($month <=6) $start_date = "$year-01-01 00:00:00";
+        else $start_date = "$year-07-01 00:00:00";
+        break;
+    case 'year':
+        $start_date = date('Y-01-01 00:00:00');
+        break;
+    default:
+        $start_date = date('Y-m-01 00:00:00');
+}
+
+
+
+/* =====================
+   Statisztika lekérdezés: termékek összesített mennyiség és bevétel
+=====================*/
+$stats_query = $conn->prepare("
+    SELECT P.id, P.name, SUM(OI.quantity) AS total_quantity, SUM(OI.quantity * OI.sale_price) AS total_revenue
+    FROM ORDER_ITEMS OI
+    INNER JOIN ORDERS O ON OI.order_id = O.id
+    INNER JOIN PRODUCTS P ON OI.product_id = P.id
+    WHERE O.date >= ? AND O.status = 'Kiszállítva'
+    GROUP BY P.id
+    ORDER BY total_quantity DESC
+");
+$stats_query->bind_param("s", $start_date);
+$stats_query->execute();
+$stats_result = $stats_query->get_result();
+
+
+
+/* =====================
+   RENDELÉS MENTÉSE
+=====================*/
+if (isset($_POST['save_cart'])) {
+    if (!isset($_SESSION['user_id'])) {
+        echo "<script>alert('A művelethez be kell jelentkeznie!');</script>";
+    } elseif (empty($_SESSION['cart'])) {
+        echo "<script>alert('A kosár üres!');</script>";
+    } else {
+        $user_id = $_SESSION['user_id'];
+        $status = "Megrendelve";
+        $shipping_address = "Profillap szerinti cím";
+
+        // 1. Rendelés beszúrása
+        $stmt = $conn->prepare("INSERT INTO orders (user_id, status, shipping_address) VALUES (?, ?, ?)");
+        $stmt->bind_param("iss", $user_id, $status, $shipping_address);
+        $stmt->execute();
+        $order_id = $conn->insert_id;
+
+        // 2. Tételek rögzítése
+        foreach ($_SESSION['cart'] as $item) {
+            $p_id = $item['product_id'];
+            $qty  = $item['quantity'];
+            $price = $item['price'];
+
+            $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, sale_price) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("iiii", $order_id, $p_id, $qty, $price);
+            $stmt->execute();
+
+            $stmt = $conn->prepare("UPDATE products SET stock = stock - ? WHERE id = ? AND stock >= ?");
+            $stmt->bind_param("iii", $qty, $p_id, $qty);
+            $stmt->execute();
+        }
+
+        // 3. Használt kupon elégetése
+        if (isset($_SESSION['discount'])) {
+            $uc_id = $_SESSION['discount']['uc_id'];
+            $stmt = $conn->prepare("UPDATE USER_COUPONS SET used = 1 WHERE id = ?");
+            $stmt->bind_param("i", $uc_id);
+            $stmt->execute();
+            unset($_SESSION['discount']);
+        }
+
+        // 4. AUTOMATIKUS KUPON GENERÁLÁS (Admin nélkül)
+        checkAndGenerateUserCoupons($user_id, $conn);
+
+        $_SESSION['cart'] = [];
+        echo "<script>alert('Sikeres rendelés! Ellenőrizze profilját az esetleges hűségkuponokért.'); window.location.href='index.php';</script>";
+        exit;
+    }
+}
+?>
