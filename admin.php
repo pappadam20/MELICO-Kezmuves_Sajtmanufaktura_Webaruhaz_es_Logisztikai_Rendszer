@@ -197,3 +197,111 @@ if(isset($_POST['add_supplier'])){
     header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
     exit;
 }
+
+
+
+/* =====================
+   KATEGÓRIA TÖRLÉSE
+=====================*/
+if(isset($_GET['del_cat'])){
+    $cat_id = $_GET['del_cat'];
+    // Csak akkor törölhető, ha nincs hozzá termék
+    $check = $conn->prepare("SELECT id FROM PRODUCTS WHERE category_id = ?");
+    $check->bind_param("i", $cat_id);
+    $check->execute();
+    if($check->get_result()->num_rows == 0){
+        $stmt = $conn->prepare("DELETE FROM CATEGORIES WHERE id = ?");
+        $stmt->bind_param("i", $cat_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+    header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
+    exit;
+}
+
+
+
+/* =====================
+   SZÁLLÍTÓ TÖRLÉSE
+=====================*/
+if(isset($_GET['del_sup'])){
+    $sup_id = $_GET['del_sup'];
+    // Csak akkor töröljük, ha nem tartozik hozzá termék
+    $check = $conn->prepare("SELECT id FROM PRODUCTS WHERE supplier_id = ?");
+    $check->bind_param("i", $sup_id);
+    $check->execute();
+    if($check->get_result()->num_rows == 0){
+        $stmt = $conn->prepare("DELETE FROM SUPPLIERS WHERE id = ?");
+        $stmt->bind_param("i", $sup_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+    header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
+    exit;
+}
+
+
+/* =====================
+   FELHASZNÁLÓ HOZZÁADÁSA (Admin/Futár)
+=====================*/
+if(isset($_POST['add_user'])){
+    $name = $_POST['username'];  
+    $email = $_POST['email'];    
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = $_POST['role']; // '2' = admin, '1' = futár
+
+    // Csak admin (2) vagy futár (1)
+    if($role != '2' && $role != '1'){
+        die("Csak admin vagy futár adható hozzá!");
+    }
+
+    $stmt = $conn->prepare("INSERT INTO USERS (name, email, password, role) VALUES (?, ?, ?, ?)");
+    if(!$stmt){
+        die("Prepare failed: " . $conn->error);
+    }
+
+    $stmt->bind_param("ssss", $name, $email, $password, $role);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
+    exit;
+}
+
+
+
+/* =====================
+   TERMÉK HOZZÁADÁSA
+=====================*/
+if(isset($_POST['add'])){
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $stock = $_POST['stock'];
+    $category_id = $_POST['category_id'];
+    $supplier_id = $_POST['supplier_id'];
+    
+    // Kép neve (ha feltöltünk valamit)
+    $image = "no-image.png";
+
+    if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
+        $image = time() . "_" . basename($_FILES['image']['name']);
+        $dir = "assets/img/category_" . $category_id . "/";
+        if(!is_dir($dir)){
+            mkdir($dir, 0777, true);
+        }
+        $target = $dir . $image;
+        $target = "assets/img/category_" . $category_id . "/" . $image;
+        $check = getimagesize($_FILES["image"]["tmp_name"]);
+        if($check !== false){
+            move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        }
+    }
+
+    $stmt = $conn->prepare("INSERT INTO PRODUCTS (category_id, supplier_id, name, description, price, stock, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iissdis", $category_id, $supplier_id, $name, $description, $price, $stock, $image);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
+    exit;
+}
