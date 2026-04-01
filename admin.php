@@ -605,3 +605,207 @@ if (isset($_POST['save_cart'])) {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MELICO Admin</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+
+    <style>
+
+    /* ===== CÍM ===== */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* ===== TAB MENÜ ===== */
+    .tab {
+        display: flex;
+        justify-content: center;   /* vízszintes középre */
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Tab gombok */
+    .tab button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #ffbc3f;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .tab button.active { 
+        background-color: #c48628; 
+    }
+
+    /* Új elem hozzáadása panel középre */
+    #add {
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+        width: 768px;
+        max-width: 90%;
+        min-height: 480px;
+
+        margin: 0 auto;           /* vízszintes középre */
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;   /* függőleges középre */
+    }
+
+    /* Form elemei középre rendezve */
+    #add form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* ===== STATS ===== */
+    #stats {
+        width: 90%;          /* max szélesség mobilon is jól mutat */
+        max-width: 1000px;   /* nagyobb képernyőn sem lesz túl széles */
+        margin: 0 auto 30px auto; /* középre, alul 30px margó */
+        text-align: center;   /* szövegek középre a panelben */
+    }
+
+    #stats table {
+        margin: 0 auto;      /* a táblázat középre */
+        width: 80%;          /* tetszőleges szélesség a középre igazításhoz */
+        border-collapse: collapse;
+    }
+
+    #stats th, #stats td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;   /* cellák középre */
+        vertical-align: middle;
+    }
+
+    .tab button.active { 
+        background-color: #c48628; 
+    }
+
+    /* ===== ÁLTALÁNOS ===== */
+    .tabcontent { 
+        display: none; 
+    }
+
+    table { 
+        border-collapse: collapse; 
+        width: 100%; 
+        margin-top: 20px; 
+    }
+
+    th, td { 
+        border: 1px solid #ccc; 
+        padding: 8px; 
+        text-align: left; 
+        vertical-align: top; 
+    }
+
+    input, textarea, select { 
+        width: 100%; 
+        padding: 6px; 
+        margin: 4px 0; 
+    }
+
+    /* ===== GOMBOK ===== */
+    .button { 
+        padding: 6px 12px; 
+        margin-top: 6px; 
+        display: inline-block; 
+        background-color: #ffbc3f; 
+        color: white; 
+        text-decoration: none; 
+        border-radius: 4px; 
+    }
+
+    .button-save { 
+        background-color: #4CAF50; 
+    }
+
+    .button-save:hover { 
+        background-color: #45a049; 
+    }
+
+    .button-delete { 
+        background-color: red; 
+    }
+
+    .button-delete:hover { 
+        background-color: darkred; 
+    }
+    </style>
+</head>
+
+<body>
+
+<?php
+$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] == '2';
+?>
+
+
+<!-- ===== NAVBAR ===== -->
+<header class="header" id="header">
+   <nav class="nav container">
+      <a href="index.php" class="nav__logo">
+         <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+      </a>
+
+      <div class="nav__menu" id="nav-menu">
+         <ul class="nav__list">
+            <li class="nav__item"><a href="index.php" class="nav__link">Főoldal</a></li>
+            <li class="nav__item"><a href="termekeink.php" class="nav__link">Termékeink</a></li>
+            <li class="nav__item"><a href="rolunk.php" class="nav__link">Rólunk</a></li>
+            <li class="nav__item"><a href="kapcsolatfelvetel.php" class="nav__link">Kapcsolatfelvétel</a></li>
+
+            <?php if($isAdmin): ?>
+            <li class="nav__item">
+               <a href="admin.php" class="nav__link active-link">Admin</a>
+            </li>
+            <?php endif; ?>
+
+            <!-- Bejelentkezés / Profil -->
+            <li class="nav__item">
+               <?php if (isset($_SESSION['user_id'])): ?>
+                  <a href="profil.php" class="nav__link nav__profile">
+                        <i class="ri-user-line"></i>
+                  </a>
+               <?php else: ?>
+                  <a href="signIn.php" class="nav__signin button">Bejelentkezés</a>
+               <?php endif; ?>
+            </li>
+         </ul>
+
+         <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+         </div>
+
+         <img src="assets/img/cheese2.png" alt="image" class="nav__img-1">
+         <img src="assets/img/cheese1.png" alt="image" class="nav__img-2">
+      </div>
+
+      <div class="nav__toggle" id="nav-toggle">
+         <i class="ri-menu-fill"></i>
+      </div>
+   </nav>
+</header>
+<h1>Admin Felület</h1>
+
+<!--==================== TAB MENÜ ====================-->
+<div class="tab">
+    <button class="tablinks active" onclick="openTab(event,'add')">Új termék hozzáadása</button>
+    <button class="tablinks" onclick="openTab(event,'users')">Felhasználók hozzáadása / listája</button>
+    <button class="tablinks" onclick="openTab(event,'manage')">Kategóriák / Szállítók</button>
+    <button class="tablinks" onclick="openTab(event,'edit')">Módosítás / Törlés</button>
+    <button class="tablinks" onclick="openTab(event,'stats')">Statisztikák</button>
+</div>
