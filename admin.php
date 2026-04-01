@@ -305,3 +305,103 @@ if(isset($_POST['add'])){
     header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
     exit;
 }
+
+
+
+/* =====================
+   ÚJ KATEGÓRIA HOZZÁADÁSA
+=====================*/
+if (isset($_POST['add_category'])) {
+    $cat_name = trim($_POST['cat_name']);
+    $cat_desc = trim($_POST['cat_description']);
+    echo "<script>alert('Kategória hozzáadva!'); window.location.href='admin.php?tab=manage';</script>";
+
+    if (!empty($cat_name)) {
+        $stmt = $conn->prepare("INSERT INTO CATEGORIES (name, description) VALUES (?, ?)");
+        $stmt->bind_param("ss", $cat_name, $cat_desc);
+        if ($stmt->execute()) {
+            echo "<script>alert('Kategória sikeresen hozzáadva!'); window.location.href='admin.php?tab=cat_supp';</script>";
+        } else {
+            echo "<script>alert('Hiba történt a mentés során!');</script>";
+        }
+        $stmt->close();
+    } else {
+        echo "<script>alert('A kategória neve nem lehet üres!');</script>";
+    }
+}
+
+
+
+/* =====================
+   Termék szerkesztése
+=====================*/
+if(isset($_POST['edit'])){
+
+    $id = $_POST['id'];
+
+    // Régi kategória lekérése
+    $stmt_old = $conn->prepare("SELECT category_id, image FROM PRODUCTS WHERE id=?");
+    $stmt_old->bind_param("i", $id);
+    $stmt_old->execute();
+    $result_old = $stmt_old->get_result();
+    $old = $result_old->fetch_assoc();
+
+    $old_category = $old['category_id'];
+    $old_image = $old['image'];
+
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $stock = $_POST['stock'];
+    $category_id = $_POST['category_id'];
+    $supplier_id = $_POST['supplier_id'];
+    $image = $_POST['current_image'] ?? "no-image.png";
+
+    /* ÚJ KÉP FELTÖLTÉSE */
+    if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
+
+        $image = time() . "_" . basename($_FILES['image']['name']);
+        $dir = "assets/img/category_" . $category_id . "/";
+        if(!is_dir($dir)){
+            mkdir($dir, 0777, true);
+        }
+        $target = $dir . $image;
+        $target = "assets/img/category_" . $category_id . "/" . $image;
+        $check = getimagesize($_FILES["image"]["tmp_name"]);
+        if($check !== false){
+            move_uploaded_file($_FILES['image']['tmp_name'], $target);
+        }
+
+        /* régi kép törlése */
+        if($old_image != "no-image.png"){
+            $old_path = "assets/img/category_" . $old_category . "/" . $old_image;
+            if(file_exists($old_path)){
+                unlink($old_path);
+            }
+        }
+    }
+
+    /* HA A KATEGÓRIA MEGVÁLTOZOTT */
+    elseif($old_category != $category_id && $image != "no-image.png"){
+        
+        $old_path = "assets/img/category_" . $old_category . "/" . $image;
+        $new_dir = "assets/img/category_" . $category_id . "/";
+        $new_path = $new_dir . $image;
+
+        // HA NINCS MAPPa → létrehozzuk
+        if(!is_dir($new_dir)){
+            mkdir($new_dir, 0777, true);
+        }
+
+        if(file_exists($old_path)){
+            rename($old_path, $new_path);
+        }
+    }
+
+    $stmt = $conn->prepare("UPDATE PRODUCTS SET category_id=?, supplier_id=?, name=?, description=?, price=?, stock=?, image=? WHERE id=?");
+    $stmt->bind_param("iissdisi", $category_id, $supplier_id, $name, $description, $price, $stock, $image, $id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: admin.php?tab=" . ($_SESSION['active_tab'] ?? 'add'));
+    exit;
+}
