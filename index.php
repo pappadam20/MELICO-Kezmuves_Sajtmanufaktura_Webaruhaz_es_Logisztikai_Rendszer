@@ -477,3 +477,143 @@ if (isset($_POST['add_to_cart'])) {
       <div class="nav__toggle" id="nav-toggle"><i class="ri-menu-fill"></i></div>
    </nav>
 </header>
+
+
+
+   <!--==================== MAIN ====================-->
+   <main class="main">
+
+      <!-- KUPON VISSZASZÁMLÁLÓ -->
+      <!-- Csak akkor jelenik meg, ha van aktív kupon -->
+      <?php if ($discount > 0): ?>
+      <div id="coupon-countdown" class="coupon-alert" style="display: block;">
+         <i class="ri-time-line"></i> 
+
+         <span class="coupon-main">
+            FIGYELEM! Van egy <strong><?= $discount ?>%-os</strong> kuponod! Lejár:
+         </span>
+
+         <span class="coupon-expiry">
+            <span id="timer">--:--:--</span>
+         </span>
+      </div>
+      <?php endif; ?>
+      
+
+
+      <!--==================== HOME SZEKCIÓ ====================-->
+      <!-- Fő nyitó rész (hero section) -->
+      <section class="home section" id="home">
+
+         <!-- Háttérkép -->
+         <img src="assets/img/home-bg.jpg" alt="image" class="home__bg">
+         <div class="home__shadow"></div>
+
+         <!-- Tartalom -->
+         <div class="home__container container grid">
+
+            <!-- Szöveges rész -->
+            <div class="home__data">
+               <h1 class="home__title">
+                  <a href="#home" class="nav__link active-link">Főoldal<br></a>
+
+                  <a href="#new" class="nav__link">Újdonságok<br></a>
+
+                 <!-- <a href="#about" class="nav__link">Rólunk<br></a> -->
+
+                  <a href="#favorite" class="nav__link">Kedvenceink<br></a>
+
+                  <a href="#testimonial" class="nav__link">Vásárlói Vélemények<br></a>
+
+                 <!--<a href="#visit" class="nav__link">Kapcsolatfelvétel<br></a>-->
+               </h1>
+
+               <!-- CTA gomb -->
+               <a href="termekeink.php" class="button">Fedezze Fel Termékeinket</a>
+
+            </div>
+
+            <!-- Kép -->
+            <div class="home__image">
+               <img src="assets/img/cheese3.png" alt="image" class="home__img">
+            </div>
+         </div>
+      </section>
+
+
+
+      <!--==================== ÚJDONSÁGOK ====================-->
+      <!-- Legújabb termékek listázása adatbázisból -->
+      <section class="new section" id="new">
+         <h2 class="section__title">Újdonságok</h2>
+
+         <div class="new__container container grid">
+
+            <!-- Termék kártyák -->
+            <div class="new__content grid">
+               <!-- PHP ciklus generálja -->
+               <?php
+               $new_products_query = "SELECT id, name, description, category_id, image FROM PRODUCTS ORDER BY id DESC LIMIT 3";
+               $new_products_result = $conn->query($new_products_query);
+
+               if ($new_products_result && $new_products_result->num_rows > 0) {
+                  while ($product = $new_products_result->fetch_assoc()) {
+                     $name = htmlspecialchars($product['name']);
+                     $ai_summary = generateAISummary($product['name'], $product['description']);
+                     $imgPath = "assets/img/category_" . $product['category_id'] . "/" . $product['image'];
+                     
+                     if (empty($product['image']) || !file_exists($imgPath)) {
+                           $imgPath = "assets/img/no-image.png";
+                     }
+               ?>
+                     <article class="new__card">
+                        <div class="new__data">
+                           <h2 class="new__title"><?php echo $name; ?></h2>
+                           <p class="new__description"><?php echo htmlspecialchars($ai_summary); ?></p>
+                        </div>
+
+                        <img src="<?php echo $imgPath; ?>" 
+                              alt="<?php echo $name; ?>" 
+                              class="new__img" 
+                              style="cursor: pointer;" 
+                              onclick="window.location.href='termek.php?id=<?php echo $product['id']; ?>&from=index.php'">
+                     </article>
+               <?php
+                  }
+               } else {
+                  echo "<p>Hamarosan újabb finomságokkal jelentkezünk!</p>";
+               }
+               ?>
+            </div>
+
+            <!-- További termékek gomb -->
+            <a href="termekeink.php" class="new__button button">További Termékeink</a>
+         </div>
+      </section>
+
+
+
+      <!--==================== RÓLUNK ====================-->
+      <!-- Bemutatkozó szekció -->
+      <section class="about section" id="about">
+
+         <div class="about__container container grid">
+
+            <!-- Szöveg -->
+            <div class="about__data">
+               <h2 class="section__title">Rólunk</h2>
+
+               <p class="about__description">
+                  A MELICO prémium minőségű kézműves sajtokat kínál, a hagyományos receptek és a friss, helyi alapanyagok felhasználásával. 
+                  Webáruházunk egyszerűvé teszi az egyedi sajtok online rendelését.
+               </p>
+
+               <a href="rolunk.php" class="button">Tudjon Meg Többet</a>
+
+               <img src="assets/img/logo/MELICO LOGO 2.png" alt="image" class="about__cheese">
+            </div>
+
+            <!-- Kép -->
+            <img src="assets/img/about-melico.jpg" alt="image" class="about-img">
+         </div>
+      </section>
