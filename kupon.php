@@ -94,3 +94,51 @@ if(isset($_POST['redeem_coupon'])) {
                 $found = true;
             }
         } 
+        
+        //*----------- B: GLOBÁLIS KUPON KERESÉSE -----------*/
+        if (!$found) {
+            $g_stmt = $conn->prepare("SELECT id, discount, max_items FROM COUPONS WHERE UPPER(code) = UPPER(?) AND valid_until >= NOW() LIMIT 1");
+            $g_stmt->bind_param("s", $code);
+            $g_stmt->execute();
+            $g_res = $g_stmt->get_result();
+
+            if ($g_res->num_rows > 0) {
+                $g_row = $g_res->fetch_assoc();
+                
+                // Ellenőrizzük, hogy már felhasználta-e
+                $check = $conn->prepare("SELECT id FROM USER_COUPONS WHERE user_id = ? AND coupon_id = ? AND used = 1");
+                $check->bind_param("ii", $uid, $g_row['id']);
+                $check->execute();
+                
+                if ($check->get_result()->num_rows == 0) {
+                    // Kupon hozzárendelése a felhasználóhoz
+                    $ins = $conn->prepare("INSERT INTO USER_COUPONS (user_id, coupon_id, used) VALUES (?, ?, 1)");
+                    $ins->bind_param("ii", $uid, $g_row['id']);
+                    $ins->execute();
+
+                    /* SESSION mentés */
+                    $_SESSION['coupon_discount'] = $g_row['discount'];
+                    $_SESSION['coupon_expiry'] = time() + ($validity_days * 86400);
+                    $_SESSION['coupon_max_items'] = $g_row['max_items'];
+
+                    /* DB mentés */
+                    $save = $conn->prepare("UPDATE users SET coupon_discount=?, coupon_expiry=? WHERE id=?");
+                    $save->bind_param("iii", $_SESSION['coupon_discount'], $_SESSION['coupon_expiry'], $uid);
+                    $save->execute();
+                    
+                    $success_msg = "Globális kupon beváltva! Kedvezmény: " . $g_row['discount'] . "%";
+                    $found = true;
+                } else {
+                    $error_msg = "Ezt a globális kupont már felhasználtad!";
+                    $found = true;
+                }
+            }
+        }
+    }
+
+    /*----------- HIBA: NEM TALÁLT KUPON -----------*/
+    if(!$found) {
+        $error_msg = "A megadott kupon kód érvénytelen vagy lejárt!";
+    }
+}
+?>
