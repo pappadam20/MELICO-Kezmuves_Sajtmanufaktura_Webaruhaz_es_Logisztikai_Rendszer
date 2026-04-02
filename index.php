@@ -824,3 +824,113 @@ if (isset($_POST['add_to_cart'])) {
             </div>
          </div>
       </section>
+
+
+
+      <!--==================== KAPCSOLAT ====================-->
+      <!-- Kapcsolatfelvételi CTA -->
+      <section class="visit section" id="visit">
+         <div class="visit__container">
+
+            <!-- Háttér -->
+            <img src="assets/img/home-melico.png" alt="image" class="visit__bg">
+            <div class="visit__shadow"></div>
+
+            <!-- Tartalom -->
+            <div class="visit__content container grid">
+               <div class="visit__data">
+                  <h2 class="visit__title">Kapcsolatfelvétel</h2>
+
+                  <p class="visit__description">
+                     Látogasson el hozzánk, vagy rendeljen online a prémium kézműves sajtokért.
+                  </p>
+
+                  <a href="kapcsolatfelvetel.php" class="button">Kapcsolatfelvétel</a>
+               </div>
+            </div>
+         </div>
+      </section>
+   </main>
+
+
+   
+   <!--==================== FOOTER ====================-->
+   <!-- Lábléc: elérhetőségek, cím, social linkek -->
+   <footer class="footer">
+
+      <div class="footer__container container grid">
+
+         <!-- LOGÓ + LEÍRÁS -->
+         <div>
+            <a href="#" class="footer__logo">MELICO</a>
+            <p class="footer__description">
+               Kézműves sajtok <br> közvetlenül a manufaktúrából
+            </p>
+         </div>
+
+         <div class="footer__container grid">
+            <div>
+               <h3 class="footer__title">Cím</h3>
+
+               <ul class="footer__list">
+                  <li>
+                     <address class="footer__info">1095 Budapest, Ipar utca 12.</address>
+                  </li>
+
+                  <li>
+                     <address class="footer__info"> H-P 9:00 - 18:00</address>
+                  </li>
+               </ul>
+            </div>
+
+            <!-- ELÉRHETŐSÉGEK -->
+            <div>
+               <h3 class="footer__title">Kapcsolatfelvétel</h3>
+
+               <ul class="footer__list">
+                  <li>
+                     <address class="footer__info"> info@melico.hu</address>
+                  </li>
+
+                  <li>
+                     <address class="footer__info"> +36 30 123 4567</address>
+                  </li>
+               </ul>
+            </div>
+
+            <div>
+               <h3 class="footer__title">Kövess Minket</h3>
+
+               <!-- SOCIAL -->
+               <div class="footer__social">
+                  <!-- ikonok -->
+                  <a href="https://www.facebook.com/" target="_blank">
+                     <i class="ri-facebook-circle-line"></i>
+                  </a>
+
+                  <a href="https://www.instagram.com/" target="_blank">
+                     <i class="ri-instagram-line"></i>
+                  </a>
+
+                  <a href="https://www.youtube.com/" target="_blank">
+                     <i class="ri-youtube-line"></i>
+                  </a>
+               </div>
+            </div>
+         </div>
+
+         <img src="assets/img/cheese5.png" alt="image" class="footer__img-1">
+         <img src="assets/img/cheese4.png" alt="image" class="footer__img-2">
+      </div>
+
+      <!-- COPYRIGHT -->
+      <span class="footer__copy">
+         &#169; 2026 MELICO. Minden jog fenntartva.
+      </span>
+   </footer>
+
+   <!--========== SCROLL UP GOMB ==========-->
+   <!-- Egy lebegő gomb, amelyre kattintva a felhasználó gyorsan visszajuthat az oldal tetejére -->
+   <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-line"></i>
+   </a>
