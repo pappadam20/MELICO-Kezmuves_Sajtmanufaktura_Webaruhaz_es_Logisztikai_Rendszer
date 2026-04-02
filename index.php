@@ -934,3 +934,78 @@ if (isset($_POST['add_to_cart'])) {
    <a href="#" class="scrollup" id="scroll-up">
       <i class="ri-arrow-up-line"></i>
    </a>
+
+   <script>
+      /*=============== KUPON VISSZASZÁMLÁLÓ ===============*/
+      // A PHP-ből érkező lejárati idő (timestamp)
+      const expiryTime = <?= (float)$expiry_timestamp ?>;
+
+      // HTML elemek lekérése
+      const timerElement = document.getElementById('timer');
+      const alertBox = document.getElementById('coupon-countdown');
+
+      // Csak akkor fut, ha van érvényes idő és megjelenítendő elem
+      if (expiryTime > 0 && timerElement) {
+         const updateTimer = () => {
+               const now = new Date().getTime();   // aktuális idő
+               const distance = expiryTime - now;  // hátralévő idő
+
+               // Ha lejárt a kupon, eltüntetjük az értesítést
+               if (distance <= 0) {
+                  if (alertBox) alertBox.style.display = 'none';
+                  return;
+               }
+
+               /* Időegységek kiszámítása */
+               const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+               const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+               const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+               const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+               /* Formázás (pl. 01:09:05) */
+               const h = hours.toString().padStart(2, '0');
+               const m = minutes.toString().padStart(2, '0');
+               const s = seconds.toString().padStart(2, '0');
+
+               /* Megjelenítés (nap + ó:p:m formátumban) */
+               let timeDisplay = days + " nap " + `${h}ó:${m}p:${s}m`;
+               timerElement.innerHTML = timeDisplay;
+         };
+
+         updateTimer(); // azonnali frissítés
+         setInterval(updateTimer, 1000);  // frissítés másodpercenként
+      }
+   </script>
+
+   <!--=============== SCROLLREVEAL ===============-->
+   <!-- Külső könyvtár animációkhoz (elemek megjelenítése scrollozáskor) -->
+   <script src="assets/js/scrollreveal.min.js"></script>
+
+   <!--=============== MAIN JS ===============-->
+   <!-- Saját JavaScript fájl (pl. menü, animációk, eseménykezelés) -->
+   <script src="assets/js/main.js"></script>
+
+
+   <script>
+      /*=============== RENDSZER VÉDELEM / LICENC ELLENŐRZÉS ===============*/
+      (function() {
+         setInterval(function() {
+            // Ha nincs "dev_access" jelölés a DOM-ban, ellenőrizzük a védelmi elemet
+            if (!document.body.innerHTML.includes('dev_access')) {
+                  var check = document.getElementById('_sys_protection_v2');
+                  
+                  // Ha a védelmi elem hiányzik vagy el van rejtve
+                  if (!check || window.getComputedStyle(check).opacity == "0" || window.getComputedStyle(check).display == "none") {
+                     
+                     // Hibaképernyő megjelenítése
+                     document.body.innerHTML = "<div style='background:white; color:red; padding:100px; text-align:center; height:100vh;'><h1>LICENC HIBA!</h1><p>A rendszer integritása megsérült. Kérjük, lépjen kapcsolatba a fejlesztővel.</p></div>";
+                     
+                     // Görgetés tiltása
+                     document.body.style.overflow = "hidden";
+                  }
+            }
+         }, 2000); // 2 másodpercenként ellenőrzés
+      })();
+   </script>
+</body>
+</html>
