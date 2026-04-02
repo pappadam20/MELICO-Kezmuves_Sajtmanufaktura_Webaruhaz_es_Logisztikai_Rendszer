@@ -755,3 +755,72 @@ if (isset($_POST['add_to_cart'])) {
             ?>
          </div>
       </section>
+
+      <!--==================== VÉLEMÉNYEK ====================-->
+      <!-- Vásárlói visszajelzések -->
+      <section class="testimonial section" id="testimonial">
+         <h2 class="section__title">Vásárlói Vélemények</h2>
+
+         <div class="testimonial__container container grid">
+            <!-- Statikus vélemények -->
+
+            <div class="testimonial__content grid">
+               <article class="testimonial__card">
+                  <div class="testimonial__data">
+                     <i class="ri-double-quotes-l testimonial__icon"></i>
+                     <p class="testimonial__description">
+                        A sajtok mindig frissek és ízletesek. Ez a minőség egyedülálló, és a kiszállítás gyors és pontos.
+                     </p>
+
+                     <div class="testimonial__profile">
+                        <img src="assets/img/Vásárlói Vélemények/Péter.jpg" alt="image" class="testimonial__img">
+                        <div>
+                           <h3 class="testimonial__name">Péter</h3>
+                           <span class="testimonial__status">Rendszeres Vásárló</span>
+                        </div>
+                     </div>
+                  </div>
+               </article>
+
+
+               <article class="testimonial__card">
+                  <div class="testimonial__data">
+                     <i class="ri-double-quotes-l testimonial__icon"></i>
+                     <p class="testimonial__description">
+                        Különösen tetszik, hogy a rendelés után végig nyomon követhető a kiszállítás.
+                        A sajtok kifogástalan állapotban érkeztek meg, érezhető a gondos logisztika.
+                     </p>
+
+                     <div class="testimonial__profile">
+                        <img src="assets/img/Vásárlói Vélemények/Katalin.jpg" alt="image" class="testimonial__img">
+                        <div>
+                           <h3 class="testimonial__name">Katalin</h3>
+                           <span class="testimonial__status">Prémium Vásárló</span>
+                        </div>
+                     </div>
+                  </div>
+               </article>
+
+
+
+               <article class="testimonial__card">
+                  <div class="testimonial__data">
+                     <i class="ri-double-quotes-l testimonial__icon"></i>
+                     <p class="testimonial__description">
+                        Ritkán találni ilyen jól szervezett kézműves webáruházat.
+                        A futár pontos volt, a termékek pedig valóban prémium minőséget képviselnek.
+                     </p>
+
+                     <div class="testimonial__profile">
+                        <img src="assets/img/Vásárlói Vélemények/Balázs.jpg" alt="image" class="testimonial__img">
+                        <div>
+                           <h3 class="testimonial__name">Balázs</h3>
+                           <span class="testimonial__status">Visszatérő Vásárló</span>
+                        </div>
+                     </div>
+                  </div>
+               </article>
+
+            </div>
+         </div>
+      </section>
