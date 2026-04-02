@@ -124,3 +124,105 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] == '2';
     </style>
 </head>
 <body>
+
+   <!--==================== HEADER (NAVIGÁCIÓ) ====================-->
+   <!--
+   A fejléc tartalmazza a fő navigációs menüt.
+   PHP feltételek alapján dinamikusan változik:
+   - aktív oldal kiemelése
+   - admin menüpont megjelenítése
+   - bejelentkezett felhasználó kezelése
+   -->
+   <header class="header" id="header">
+      <nav class="nav container">
+
+         <!-- LOGÓ -->
+         <a href="index.php" class="nav__logo">
+            <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+         </a>
+
+         <!-- NAVIGÁCIÓS MENÜ -->
+         <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+
+               <!-- FŐOLDAL -->
+               <li class="nav__item">
+                  <a href="index.php" class="nav__link <?= basename($_SERVER['PHP_SELF'])=='index.php' ? 'active-link' : ''; ?>">Főoldal</a>
+               </li>
+
+               <!-- TERMÉKEK -->
+               <li class="nav__item">
+                  <a href="termekeink.php" class="nav__link <?= basename($_SERVER['PHP_SELF'])=='termekeink.php' ? 'active-link' : ''; ?>">Termékeink</a>
+               </li>
+
+               <!-- RÓLUNK -->
+               <li class="nav__item">
+                  <a href="rolunk.php" class="nav__link <?= basename($_SERVER['PHP_SELF'])=='rolunk.php' ? 'active-link' : ''; ?>">Rólunk</a>
+               </li>
+
+               <!-- KAPCSOLAT -->
+               <li class="nav__item">
+                  <a href="kapcsolatfelvetel.php" class="nav__link <?= basename($_SERVER['PHP_SELF'])=='kapcsolatfelvetel.php' ? 'active-link' : ''; ?>">Kapcsolatfelvétel</a>
+               </li>
+
+               <!-- ADMIN MENÜ (CSAK ADMINNAK) -->
+               <?php if($isAdmin): ?>
+               <li class="nav__item">
+                  <a href="admin.php" class="nav__link <?= basename($_SERVER['PHP_SELF'])=='admin.php' ? 'active-link' : ''; ?>">Admin</a>
+               </li>
+               <?php endif; ?>
+
+               <!-- FELHASZNÁLÓ / BEJELENTKEZÉS -->
+               <li class="nav__item">
+                  <?php if (isset($_SESSION['user_id'])): ?>
+                     <!-- PROFIL IKON -->
+                     <a href="profil.php" class="nav__link nav__profile">
+                           <i class="ri-user-line"></i>
+                     </a>
+                  <?php else: ?>
+                     <!-- BEJELENTKEZÉS -->
+                     <a href="signIn.php" class="nav__signin button">Bejelentkezés</a>
+                  <?php endif; ?>
+               </li>
+
+               <!-- KUPON (NEM ADMIN) -->
+               <?php if (!$isAdmin): ?>
+                  <li class="nav__item">
+                     <a href="kupon.php" class="nav__link <?php echo basename($_SERVER['PHP_SELF'])=='kupon.php' ? 'active-link' : ''; ?>">
+                        <i class="ri-coupon-2-line"></i>
+                     </a>
+                  </li>
+
+                  <!-- KOSÁR -->
+                  <li class="nav__item">
+                     <a href="kosar.php" class="nav__link"><i class="ri-shopping-cart-fill"></i>
+                     <?php 
+                     $total_items = 0;
+                     if (!empty($_SESSION['cart'])) {
+                        foreach ($_SESSION['cart'] as $item) {
+                              $total_items += $item['quantity'];
+                        }
+                        if ($total_items > 0) echo "($total_items)";
+                     }
+                     ?>
+                     </a>
+                  </li>
+               <?php endif; ?>
+            </ul>
+
+            <!-- MENÜ BEZÁRÁS IKON (MOBIL) -->
+            <div class="nav__close" id="nav-close">
+               <i class="ri-close-line"></i>
+            </div>
+
+            <!-- DEKORATÍV KÉPEK -->
+            <img src="assets/img/cheese2.png" alt="image" class="nav__img-1">
+            <img src="assets/img/cheese1.png" alt="image" class="nav__img-2">
+         </div>
+
+         <!-- MOBIL MENÜ NYITÁS -->
+         <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-menu-fill"></i>
+         </div>
+      </nav>
+   </header>
