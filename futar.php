@@ -358,3 +358,142 @@ $orders_res = $conn->query($sql);
    </style>
 </head>
 <body>
+    /*=============== FEJLÉC ===============*/
+    /*
+    A felső navigációs sáv (header):
+    - logó megjelenítése
+    - profil ikon elérés
+    */
+   <header class="header" id="header">
+      <nav class="nav container">
+
+        <!-- LOGÓ -->
+         <!-- A brand vizuális azonosítója -->
+         <a href="javascript:void(0);" class="nav__logo" style="cursor: default;">
+            <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+         </a>
+
+         <!-- NAVIGÁCIÓS MENÜ -->
+         <div class="nav__menu">
+            <ul class="nav__list">
+
+                <!-- PROFIL IKON -->
+               <!-- Felhasználói profil oldal elérése -->
+               <li class="nav__item"><a href="profil.php" class="nav__link"><i class="ri-user-line"></i></a></li>
+
+            </ul>
+         </div>
+      </nav>
+   </header>
+
+   <main class="main">
+
+   <!--=============== FUTÁR FELÜLET ===============-->
+      <!--
+        Ez a szekció a futár / admin felületet tartalmazza:
+        - Aktív rendelések listája
+        - Rendelés részletek megtekintése
+        - Szállítás indítása
+      -->
+      <section class="futar__section container">
+         <div class="futar__container">
+            
+            <!--=============== RENDELÉS LISTA NÉZET ===============-->
+            <!-- Bal oldali lista: aktív rendelések -->
+            <div id="emailList">
+
+                <!-- SZEKCIÓ CÍM -->
+               <h2 class="futar__title"><i class="ri-truck-line"></i> Aktuális Fuvarok</h2>
+               
+               <!-- PHP: DINAMIKUS RENDELÉS LISTA -->
+               <!-- Ha vannak rendelések -->
+               <?php if($orders_res && $orders_res->num_rows > 0): ?>
+
+                  <?php while($row = $orders_res->fetch_assoc()): ?>
+
+                    <!-- RENDELÉS KÁRTYA -->
+                     <!-- Kattintásra részletes nézet nyílik -->
+                     <div class="order__card" onclick="openEmail(<?= $row['id'] ?>)">
+
+                        <!-- BAL OLDAL: alap adatok -->
+                        <div>
+                           <span style="font-weight:bold; color:#175e69;">Rendelés #<?= $row['id'] ?></span>
+                           <div style="font-size:0.9rem; color:#555;"><?= htmlspecialchars($row['name']) ?></div>
+                        </div>
+
+                        <!-- JOBB OLDAL: státusz + összeg -->
+                        <div style="text-align: right;">
+
+                            <!-- STÁTUSZ BADGE -->
+                           <div class="status-badge <?= $row['status'] == 'Szállítás alatt' ? 'status--active' : '' ?>">
+                              <?= $row['status'] ?>
+                           </div>
+
+                           <!-- ÖSSZEG -->
+                           <div style="font-weight: bold; margin-top: 5px;"><?= number_format($row['total_sum'], 0, ',', ' ') ?> Ft</div>
+                        </div>
+                        
+                        <!-- REJTETT ADATOK (JS-hez) -->
+                        <!-- Ezeket JavaScript használja a részletes nézethez -->
+                        <div id="data-<?= $row['id'] ?>" style="display:none;" 
+                             data-name="<?= htmlspecialchars($row['name']) ?>"
+                             data-email="<?= htmlspecialchars($row['email']) ?>"
+                             data-address="<?= htmlspecialchars($row['location']) ?>"
+                             data-sum="<?= number_format($row['total_sum'], 0, ',', ' ') ?> Ft"
+                             data-uid="<?= $row['uid'] ?>">
+                        </div>
+                     </div>
+                  <?php endwhile; ?>
+
+                <!-- HA NINCS RENDELÉS -->
+               <?php else: ?>
+                  <p style="text-align:center; padding: 2rem; color: #888;">Nincs kiszállítandó rendelés.</p>
+               <?php endif; ?>
+            </div>
+
+
+            <!--=============== RÉSZLETES NÉZET ===============-->
+            <!-- Jobb oldali panel: kiválasztott rendelés adatai -->
+            <div id="emailDetail" class="detail__view">
+
+                <!-- VISSZA GOMB -->
+               <button onclick="closeEmail()" class="button button--back">
+                  <i class="ri-arrow-left-line"></i> Vissza a listához
+               </button>
+
+               <!-- RENDELÉS AZONOSÍTÓ -->
+               <h2 id="orderIdTag" style="color: #175e69; margin-bottom: 1rem;">#000</h2>
+
+               <!-- VÁSÁRLÓI INFORMÁCIÓK -->
+               <div class="detail__info-box">
+
+                <!-- Vásárló adatai -->
+                  <p><i class="ri-user-line"></i> <strong>Vásárló:</strong> <span id="detName">-</span></p>
+                  <p><i class="ri-mail-line"></i> <strong>E-mail:</strong> <span id="detEmail">-</span></p>
+                  <p><i class="ri-map-pin-line"></i> <strong>Cím:</strong> <span id="detAddress">-</span></p>
+                  <hr style="border:none; border-top:1px solid #eee; margin:15px 0;">
+
+                  <!-- Rendelés összeg -->
+                  <p><i class="ri-money-euro-circle-line"></i> <strong>Összeg:</strong> <span id="detSum" style="font-weight:bold; font-size:1.1rem;">0 Ft</span></p>
+               </div>
+
+
+
+               <!--=============== SZÁLLÍTÁS INDÍTÁSA ===============-->
+               <!-- Backend művelet: szállítás elindítása -->
+               <form action="szallitas.php" method="GET">
+
+                    <!-- Rejtett rendelés ID -->
+                    <input type="hidden" name="order_id" id="formOrderId">
+
+                    <!-- Submit gomb -->
+                    <button type="submit" class="button"><i class="ri-truck-line"></i> Szállítás megkezdése</button>
+
+                </form>
+
+            </div>
+
+         </div>
+      </section>
+
+   </main>
