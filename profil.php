@@ -384,3 +384,268 @@ if (isset($_POST['delete_account'])) {
     }
 }
 ?>
+<!-- 
+    PROFIL OLDAL (MELICO)
+
+    Ez a HTML dokumentum a felhasználói profil oldal megjelenítéséért felel.
+    Tartalmazza:
+    - az alap meta adatokat (karakterkódolás, reszponzivitás),
+    - a külső CSS fájlok betöltését (globális stílusok, ikonok),
+    - valamint egyedi, oldalhoz tartozó beágyazott stílusokat.
+
+    Az oldal fő funkciói:
+    - felhasználói adatok megjelenítése és szerkesztése,
+    - rendelések listázása státuszokkal,
+    - értesítések kezelése,
+    - többfüles (tabos) navigáció a különböző profil részek között.
+
+    A beépített CSS biztosítja:
+    - a profil kártya kinézetét,
+    - a tabos navigáció stílusát,
+    - táblázatok formázását,
+    - státusz jelöléseket (pl. rendelés állapota),
+    - visszajelző üzenetek (success/error) megjelenítését,
+    - valamint az értesítések vizuális kiemelését.
+
+    Az oldal reszponzív, így különböző képernyőméreteken is megfelelően jelenik meg.
+-->
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <!-- Alap meta adatok és stílusok betöltése a profil oldalhoz -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Reszponzív megjelenítés mobil eszközökön -->
+
+    <!-- Az oldal címe a böngésző fülön -->
+    <title>MELICO - Profilom</title>
+
+    <!-- Külső CSS fájl betöltése (globális stílusok) -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- Ikon készlet (Remixicon) betöltése -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+
+    <style>
+        /* Oldal főcímének (h1) formázása:
+        Középre igazítja a címet, valamint felső és alsó margót ad,
+        hogy vizuálisan elkülönüljön a többi tartalomtól. */
+        h1 { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            margin-top: 30px; 
+        }
+
+        /* Tab gombok konténerének elrendezése:
+        Flexbox segítségével középre igazított, egymás melletti gombok,
+        térközzel és mobilbarát tördeléssel. */
+        .tab { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            margin-bottom: 15px; 
+            flex-wrap: wrap; 
+        }
+
+        /* Tab gombok alap stílusa:
+        Egységes megjelenésű, kattintható gombok lekerekített sarkokkal. */
+        .tab button { 
+            padding: 10px 20px; 
+            border: none; 
+            background-color: #28afc4; 
+            color: white; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: 500; 
+        }
+
+        /* Aktív tab kiemelése:
+        Sötétebb háttérszín jelzi az aktuálisan kiválasztott fület. */
+        .tab button.active { 
+            background-color: #175e69; 
+        }
+
+        /* Profil kártya (fő konténer):
+        Középre igazított, árnyékolt doboz, amely tartalmazza a profil tartalmát. */
+        .profile-card { 
+            background-color: #fff; 
+            border-radius: 3px; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35); 
+            width: 768px; 
+            max-width: 90%; 
+            margin: 0 auto 50px auto; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        /* Tab tartalmak alapból rejtve:
+        JavaScript segítségével jelennek meg a megfelelő fül kiválasztásakor. */
+        .tabcontent { 
+            display: none; 
+        }
+
+        /* Táblázat alap stílus:
+        Egységes kinézet, teljes szélesség kihasználása. */
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            margin-top: 20px; 
+        }
+
+        /* Táblázat cellák:
+        Keretezett, jól olvasható cellák megfelelő belső margóval. */
+        th, td { 
+            border: 1px solid #ccc; 
+            padding: 12px; 
+            text-align: left; 
+            vertical-align: top; 
+        }
+
+        /* Táblázat fejléc:
+        Világos háttérrel kiemeli az oszlopneveket. */
+        th { 
+            background-color: #f9f9f9; 
+        }
+
+        /* Input mezők és űrlap elemek:
+        Egységes kinézetű beviteli mezők lekerekített sarkokkal. */
+        input, textarea, select { 
+            width: 100%; 
+            padding: 10px; 
+            margin: 8px 0; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+        }
+
+        /* Általános gomb stílus:
+        Egységes kinézetű akciógombok (pl. mentés, módosítás). */
+        .button { 
+            padding: 10px 20px; 
+            margin-top: 10px; 
+            display: inline-block; 
+            background-color: #175e69; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-align: center; 
+            transition: background-color 0.3s ease; 
+        }
+
+        /* Gomb hover effekt:
+        Színváltás vizuális visszajelzésként. */
+        .button:hover { 
+            background-color: #00b2cd; 
+        }
+
+        /* Jelszó gomb külön stílusa:
+        Sötétebb háttérrel különbözteti meg a többi gombtól. */
+        #pass_btn { 
+            background-color: #444; 
+        }
+
+        /* Rendelés státusz jelző (badge):
+        Kis kapszula alakú címke a rendelés állapotának megjelenítésére. */
+        .status-badge { 
+            padding: 5px 10px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            display: inline-block; 
+        }
+
+        /* Különböző státuszok színezése:
+        Vizualizálja a rendelés aktuális állapotát. */
+        .status-Megrendelve { 
+            background: #e3f2fd; 
+            color: #1976d2; 
+        }
+
+        .status-Szállítás { 
+            background: #fff3e0; 
+            color: #f57c00; 
+        }
+
+        .status-Kiszállítva { 
+            background: #e8f5e9; 
+            color: #388e3c; 
+        }
+
+        /* Üzenetek (siker/hiba):
+        Középre igazított visszajelző dobozok. */
+        .msg { 
+            padding: 10px; 
+            border-radius: 4px; 
+            margin-bottom: 15px; 
+            text-align: center; 
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        /* Siker üzenet:
+        Zöld háttérrel jelzi a sikeres műveletet. */
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+        }
+
+        /* Hiba üzenet:
+        Piros háttérrel jelzi a hibát vagy sikertelen műveletet. */
+        .error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+        }
+
+        /* Vissza navigáció link:
+        Ikonnal ellátott visszalépési lehetőség. */
+        .nav__back { 
+            display: flex; 
+            align-items: center; 
+            column-gap: .5rem; 
+            color: var(--title-color); 
+            font-weight: var(--font-medium); 
+            transition: .3s; 
+        }
+
+        /* Ikon méret:
+        A vissza gomb ikon méretének beállítása. */
+        .nav__back i { 
+            font-size: 1.25rem; 
+        }
+
+        /* Hover effekt a vissza gombon:
+        Színváltás interaktív visszajelzésként. */
+        .nav__back:hover { 
+            color: #ffbc3f; 
+        }
+
+        /* Értesítés elemek:
+        Listaelemek egységes kinézete és elválasztása. */
+        .notification-item { 
+            padding: 15px; 
+            border-bottom: 1px solid #eee; 
+            transition: background 0.3s; 
+        }
+
+        /* Olvasatlan értesítés kiemelése:
+        Kiemelt háttér és bal oldali sáv jelzi az új üzenetet. */
+        .notification-unread { 
+            background-color: #f0faff; 
+            border-left: 4px solid #28afc4; 
+        }
+
+        /* Értesítés időbélyeg:
+        Halványabb színnel jelenik meg az időinformáció. */
+        .notification-item small { 
+            color: #888; 
+            display: block; 
+            margin-top: 5px; 
+        }
+
+    </style>
+</head>
+<body>
