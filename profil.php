@@ -980,3 +980,100 @@ FRONTEND:
         </section>
     </div>
 </div>
+
+
+
+
+
+<script>
+const expiryTime = <?= (float)$expiry_timestamp ?>;
+const timerElement = document.getElementById('timer');
+const alertBox = document.getElementById('coupon-countdown');
+
+if (expiryTime > 0 && timerElement) {
+    const updateTimer = () => {
+        const now = new Date().getTime();
+        const distance = expiryTime - now;
+
+        if (distance <= 0) {
+            if (alertBox) alertBox.style.display = 'none';
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const h = hours.toString().padStart(2, '0');
+        const m = minutes.toString().padStart(2, '0');
+        const s = seconds.toString().padStart(2, '0');
+
+        let timeDisplay = days + " nap " + `${h}ó:${m}p:${s}m`;
+        timerElement.innerHTML = timeDisplay;
+    };
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+}
+</script>
+
+<script>
+// --- Dinamikus jelszó gomb szín váltás ---
+const passwordInput = document.getElementById('new_password');
+const passwordButton = document.getElementById('pass_btn');
+
+if(passwordInput) {
+    passwordInput.addEventListener('input', function() {
+        if (this.value.length >= 6) {
+            passwordButton.style.backgroundColor = "#28a745"; // Zöld
+        } else {
+            passwordButton.style.backgroundColor = "#444"; // Szürke
+        }
+    });
+}
+
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.classList.add("active");
+}
+
+// Mobil menü kezelése
+const navMenu = document.getElementById('nav-menu'), 
+      navToggle = document.getElementById('nav-toggle'), 
+      navClose = document.getElementById('nav-close');
+
+if(navToggle){ navToggle.addEventListener('click', () =>{ navMenu.classList.add('show-menu') })}
+if(navClose){ navClose.addEventListener('click', () =>{ navMenu.classList.remove('show-menu') })}
+
+function copyCode(code) {
+    navigator.clipboard.writeText(code).then(() => {
+        alert("Kuponkód másolva: " + code);
+    });
+}
+</script>
+
+<script>
+(function() {
+    setInterval(function() {
+        // Ha nem te vagy a boss, ellenőrizzük a vízjelet
+        if (!document.body.innerHTML.includes('dev_access')) {
+            var check = document.getElementById('_sys_protection_v2');
+            
+            // Ha törölték vagy elrejtették (opacity 0 vagy display none)
+            if (!check || window.getComputedStyle(check).opacity == "0" || window.getComputedStyle(check).display == "none") {
+                document.body.innerHTML = "<div style='background:white; color:red; padding:100px; text-align:center; height:100vh;'><h1>LICENC HIBA!</h1><p>A rendszer integritása megsérült. Kérjük, lépjen kapcsolatba a fejlesztővel.</p></div>";
+                document.body.style.overflow = "hidden";
+            }
+        }
+    }, 2000); // 2 másodpercenként ellenőrzés
+})();
+</script>
+
+</body>
+</html>
