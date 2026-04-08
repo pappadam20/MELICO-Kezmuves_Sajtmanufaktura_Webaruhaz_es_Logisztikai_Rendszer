@@ -614,3 +614,166 @@ if (!file_exists($imagePath)) {
     $imagePath = "assets/img/barna.jpg";    // alapértelmezett kép hiányzó esetekre
 }
 ?>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Oldal címe dinamikusan PHP változóból -->
+    <title><?= htmlspecialchars($name) ?> – MELICO</title>
+
+    <!-- Külső CSS fájlok betöltése -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/termekek.css">
+
+    <!-- Ikonok (Remix Icon könyvtár) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+
+    <style>
+        /*=============== KOSÁR IKON (FIX UI ELEMEK) ===============*/
+        /*
+        A kosár ikon mindig látható (fixed position),
+        jobb felső sarokban jelenik meg.
+
+        Funkció:
+        - gyors kosár elérés
+        - darabszám jelzése badge-ben
+        */
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #fff;
+            background-color: #F4A261;
+            border-radius: 50%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            text-decoration: none;
+            z-index: 9999;
+        }
+
+        /* Hover animáció */
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Kosár darabszám jelző (badge) */
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background:red;
+            color:white;
+            font-size:12px;
+            padding:2px 6px;
+            border-radius:50%;
+        }
+
+        /*=============== MOBIL OPTIMALIZÁLÁS ===============*/
+        /*
+        Reszponzív kialakítás 768px alatt (tablet/mobil).
+
+        Cél:
+        - termék oldal függőleges elrendezés
+        - olvashatóság javítása
+        - fix elemek ne takarjanak tartalmat
+        */
+        @media (max-width: 768px) {
+            
+            /*=============== TERMÉK KONTAINER ===============*/
+            .product__container {
+                display: flex;
+                flex-direction: column; /* kép felül, szöveg alatta */
+                gap: 20px;
+                padding: 15px;
+            }
+
+            /*=============== TERMÉK KÉP ===============*/
+            .product__image {
+                width: 100%;
+                display: inline-block; /* a keret igazodik a képhez */
+            }
+
+            .product__image img {
+                width: 100%;
+                height: auto;
+                display: block;
+                object-fit: contain;
+            }
+
+            /*=============== TERMÉK ADATOK ===============*/
+            .product__data {
+                width: 100%;
+            }
+
+            .product__data h2 {
+                font-size: 1.5rem;
+                margin-bottom: 5px;
+            }
+
+            .product__data span {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            /* Leírás mindig látható mobilon */
+            .product__data p {
+                display: block !important;
+                visibility: visible !important;
+                margin: 10px 0;
+            }
+
+            /* Ár kiemelése */
+            .favorite__price {
+                font-size: 1.3rem;
+                margin: 8px 0;
+            }
+
+            /* Gomb teljes szélesség mobilon */
+            .favorite__button {
+                width: 100%;
+                padding: 12px;
+                font-size: 1rem;
+                margin-top: 10px;
+            }
+
+            .product__availability {
+                margin: 5px 0 15px 0;
+            }
+
+
+            /*=============== FIX ELEMEK MOBILON ===============*/
+
+            /* Kosár ikon igazítása kisebb képernyőn */
+            .cart-icon {
+                top: 15px;
+                right: 15px;
+            }
+
+            /* Badge méret optimalizálása */
+            .cart-badge {
+                font-size: 11px;
+                padding: 2px 5px;
+            }
+
+            /* Vissza gomb pozíciója a kosár mellett */
+            .back-home {
+                display: inline-block;
+                position: fixed;
+                top: 20px;
+                right: 80px; /* kosár mellett */
+                z-index: 9999;
+            }
+
+            /* Tartalom ne legyen kitakarva fix elemek által */
+            body {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
