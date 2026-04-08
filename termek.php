@@ -847,3 +847,41 @@ if (!file_exists($imagePath)) {
                     <?= $supplier_text ?>
                 </p>
                 <?php endif; ?>
+
+                <!--=============== ÁR MEGJELENÍTÉS ===============-->
+                <h3 class="favorite__price" style="color:#ffae00;">
+
+                <!-- Kuponos / kedvezményes ár -->
+                <?php if ($show_discount): ?>
+
+                    <!-- Eredeti ár (áthúzva) -->
+                    <span style="text-decoration: line-through; color: #aaa; font-size: 0.9rem;">
+                        <?= number_format($price, 0, ',', ' ') ?> Ft
+                    </span>
+                    <br>
+
+                    <!-- Kedvezményes ár -->
+                    <span style="color: #ffbc3f; font-size: 1.7rem;">
+                        <?= number_format($price_after_discount, 0, ',', ' ') ?> Ft/kg
+                    </span>
+                    <br>
+
+                    <!-- Kupon készlet -->
+                    <small style="font-size: 1rem; font-weight: bold; color: #f7ff8c;">
+                        Maradt: <?= $max_allowed_discounted - $total_used_quota ?> db
+                    </small>
+
+                <?php else: ?>
+
+                    <!-- Normál ár -->
+                    <?= number_format($price, 0, ',', ' ') ?> Ft/kg
+
+                    <!-- Kupon elfogyott figyelmeztetés -->
+                    <?php if ($discount > 0 && $total_used_quota >= $max_allowed_discounted): ?>
+                        <br>
+                        <small style="color:red; font-weight:bold;">
+                            Nincs több kuponod!
+                        </small>
+                    <?php endif; ?>
+
+                <?php endif; ?>
