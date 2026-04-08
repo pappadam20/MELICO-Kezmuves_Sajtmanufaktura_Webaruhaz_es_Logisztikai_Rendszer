@@ -165,3 +165,33 @@ if (isset($_POST['login'])) {
 
         </form>
     </div>
+
+
+    <!-- ========== BEJELENTKEZÉSI ŰRLAP ========== -->
+    <div class="form-container sign-in">
+    <form method="POST">
+
+        <h1>Bejelentkezés</h1>
+
+        <!-- Hibakezelés megjelenítése -->
+        <?php if (!empty($error)) : ?>
+            <p style="color:red; margin-bottom:10px;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+
+
+        <!-- ========== Bejelentkezési adatok ========== -->
+
+        <!-- Email mező -->
+        <input type="email" name="email" placeholder="Email" required>
+
+        <!-- Jelszó mező -->
+        <input type="password" name="password" placeholder="Jelszó" required>
+
+        <!-- Bejelentkezés gomb -->
+        <button type="submit" name="login">Bejelentkezés</button>
+
+        <!-- Visszalépés a főoldalra -->
+        <a href="index.php" class="back-btn">Vissza a főoldalra</a>
+
+    </form>
+    </div>
