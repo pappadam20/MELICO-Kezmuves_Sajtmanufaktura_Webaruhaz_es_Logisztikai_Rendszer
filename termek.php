@@ -885,3 +885,19 @@ if (!file_exists($imagePath)) {
                     <?php endif; ?>
 
                 <?php endif; ?>
+
+                </h3>
+
+                <!--=============== KÉSZLET ÁLLAPOT ===============-->
+                <div class="product__availability 
+                    <?php
+                        if ($stock > 15) echo "available";
+                        elseif ($stock > 0) echo "low-stock";
+                        else echo "out-of-stock";
+                    ?>">
+                    <?php
+                        if ($stock > 15) echo "Elérhető";
+                        elseif ($stock > 0) echo "Fogyóban";
+                        else echo "Elfogyott";
+                    ?>
+                </div>
