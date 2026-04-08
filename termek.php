@@ -777,3 +777,29 @@ if (!file_exists($imagePath)) {
         }
     </style>
 </head>
+
+<body>
+
+    <!--=============== NAVIGÁCIÓ / VISSZA GOMB ===============-->
+    <!--
+    Dinamikus visszanavigálás az előző oldalra.
+    A htmlspecialchars() védi az URL-t XSS támadás ellen.
+    -->
+    <!-- VISSZA GOMB -->
+    <a href="<?= htmlspecialchars($referrer) ?>" class="back-home">
+        Vissza
+    </a>
+
+    <!--=============== KOSÁR IKON (CSAK NEM ADMIN FELHASZNÁLÓKNAK) ===============-->
+    <!--
+    A kosár ikon csak akkor jelenik meg, ha a felhasználó NEM admin.
+    A badge mutatja a kosárban lévő termékek számát.
+    -->
+    <?php if (!$isAdmin): ?>
+        <a href="kosar.php" class="cart-icon">
+            <i class="ri-shopping-cart-fill"></i>
+            <?php if ($total_items > 0): ?>
+                <span class="cart-badge"><?= $total_items ?></span>
+            <?php endif; ?>
+        </a>
+    <?php endif; ?>
