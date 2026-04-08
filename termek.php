@@ -142,3 +142,34 @@ elseif (isset($_SESSION['last_page']) && in_array($_SESSION['last_page'], ['inde
 else {
     $referrer = 'index.php';
 }
+
+
+
+/*========================================
+  KOSÁRHOZ ADÁS (POST - SESSION ALAPÚ)
+==========================================*/
+
+/*
+  Ez a blokk kezeli a termék kosárba helyezését.
+
+  Fő funkciók:
+  - Jogosultság ellenőrzés (csak vásárló)
+  - Készlet ellenőrzés
+  - Kosár kezelés SESSION-ben
+  - Kupon / kedvezmény logika
+  - Duplikált termékek kezelése
+*/
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+
+    /*==============================
+      JOGOSULTSÁG ELLENŐRZÉS
+    ==============================*/
+    /*
+      Csak bejelentkezett vásárló adhat kosárhoz.
+      role != 0 -> nincs jogosultság
+    */
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] != '0') {
+        header("Location: termek.php?id=" . (int)$_POST['id'] . "&error=no_permission");
+        exit;
+    }
