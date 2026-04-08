@@ -803,3 +803,47 @@ if (!file_exists($imagePath)) {
             <?php endif; ?>
         </a>
     <?php endif; ?>
+
+    <main class="main">
+    <section class="product section" id="product">
+        <div class="product__container">
+
+            <!--=============== TERMÉK KÉP (BAL OLDAL) ===============-->
+            <!--
+            A készlet állapotától függő vizuális jelölés:
+            - available -> van készleten
+            - low-stock -> fogyóban
+            - out-of-stock -> nincs készleten
+            -->
+            <div class="product__image 
+                <?php
+                    if ($stock > 15) echo "available";
+                    elseif ($stock > 0) echo "low-stock";
+                    else echo "out-of-stock";
+                ?>">
+                <img src="<?= htmlspecialchars($imagePath) ?>" 
+                    alt="<?= htmlspecialchars($name) ?>">
+            </div>
+
+            <!--=============== TERMÉK ADATOK (JOBB OLDAL) ===============-->
+            <div class="product__data">
+
+                <!-- Termék neve -->
+                <h2><?= htmlspecialchars($name) ?></h2>
+
+                <!-- Kategória -->
+                <span style="color:burlywood;">
+                    <?= htmlspecialchars($category_name) ?>
+                </span>
+
+                <!-- Leírás -->
+                <p style="color:#fff;">
+                    <?= nl2br(htmlspecialchars($description)) ?>
+                </p>
+
+                <!-- Szállító információ (ha van) -->
+                <?php if (!empty($supplier_text)): ?>
+                <p style="margin-top:7px; font-weight:bold; color:#fff;">
+                    <?= $supplier_text ?>
+                </p>
+                <?php endif; ?>
