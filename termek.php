@@ -391,3 +391,19 @@ if ($user_id > 0 && $discount > 0) {
         JOIN ORDERS o ON oi.order_id = o.id
         WHERE o.user_id = ? AND oi.product_id = ? AND oi.sale_price < ?
     ");
+
+    /*
+      Paraméterek:
+      - user_id -> melyik felhasználó
+      - id -> termék azonosító
+      - price -> összehasonlítás a kedvezményes árhoz
+    */
+    $check_stmt->bind_param("iid", $user_id, $id, $price);
+    $check_stmt->execute();
+
+    $res_bought = $check_stmt->get_result()->fetch_assoc();
+
+    /* Ha nincs találat, akkor 0 */
+    $already_bought_discounted = $res_bought['total'] ?? 0;
+    $check_stmt->close();
+}
