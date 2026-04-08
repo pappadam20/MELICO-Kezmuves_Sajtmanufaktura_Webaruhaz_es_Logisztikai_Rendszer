@@ -372,3 +372,22 @@ if ($stmt = $conn->prepare("
 
 /* Már kedvezményesen megvásárolt mennyiség */
 $already_bought_discounted = 0;
+
+
+/*
+  Ellenőrzés csak akkor történik, ha:
+  - van bejelentkezett felhasználó
+  - van aktív kedvezmény
+*/
+if ($user_id > 0 && $discount > 0) {
+
+    /*
+      Lekérdezzük az eddig kedvezményesen vásárolt mennyiséget
+      az adott termékre.
+    */
+    $check_stmt = $conn->prepare("
+        SELECT SUM(oi.quantity) as total 
+        FROM ORDER_ITEMS oi
+        JOIN ORDERS o ON oi.order_id = o.id
+        WHERE o.user_id = ? AND oi.product_id = ? AND oi.sale_price < ?
+    ");
