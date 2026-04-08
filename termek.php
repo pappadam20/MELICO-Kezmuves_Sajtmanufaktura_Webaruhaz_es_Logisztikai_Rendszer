@@ -417,3 +417,11 @@ $already_in_cart_discounted = $_SESSION['cart'][$discount_key]['quantity'] ?? 0;
   = már megvett + kosárban lévő
 */
 $total_used_quota = $already_bought_discounted + $already_in_cart_discounted;
+
+/*
+  Kedvezmény megjelenítése csak akkor:
+  - van kedvezmény
+  - nem lépte túl a limitet
+  - nem admin felhasználó
+*/
+$show_discount = ($discount > 0 && $total_used_quota < $max_allowed_discounted && !$isAdmin);
