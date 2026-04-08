@@ -110,3 +110,35 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
   - biztos adattípus használata az adatbázis lekérdezéshez
 */
 $product_id = (int)$_GET['id'];
+
+
+
+/* ===============================
+   VISSZA GOMB CÉLOLDAL KEZELÉSE
+=================================*/
+/*
+  Ez a logika határozza meg, hogy a "Vissza" gomb melyik oldalra navigáljon.
+
+  Prioritási sorrend:
+  1. URL paraméter (from)
+  2. Session-ben eltárolt utolsó oldal
+  3. Alapértelmezett oldal (index.php)
+*/
+
+// 1. Elsődlegesen URL paraméter alapján döntünk
+// Pl.: kosár.php?from=termekeink.php
+if (isset($_GET['from']) && in_array($_GET['from'], ['index.php', 'termekeink.php'])) {
+    $referrer = $_GET['from'];
+} 
+
+// 2. Ha nincs URL paraméter, Session alapján próbáljuk visszaállítani
+// Ez akkor hasznos, ha a felhasználó navigáció közben járt az oldalon
+elseif (isset($_SESSION['last_page']) && in_array($_SESSION['last_page'], ['index.php', 'termekeink.php'])) {
+    $referrer = $_SESSION['last_page'];
+} 
+
+// 3. Ha sem URL paraméter, sem Session nincs → alapértelmezett oldal
+// Biztonsági és fallback megoldás
+else {
+    $referrer = 'index.php';
+}
