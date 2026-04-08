@@ -195,3 +195,25 @@ if (isset($_POST['login'])) {
 
     </form>
     </div>
+
+
+    <!-- ========== VÁLTÓ PANEL (LOGIN / REGISTER ANIMÁCIÓ) ========== -->
+    <div class="toggle-container">
+        <div class="toggle">
+
+            <!-- Bal oldal: visszaváltás bejelentkezésre -->
+            <div class="toggle-panel toggle-left">
+                <h1>Üdvözöljük Újra!</h1>
+                <button class="hidden" id="login">Bejelentkezés</button>
+            </div>
+
+            <!-- Jobb oldal: váltás regisztrációra -->
+            <div class="toggle-panel toggle-right">
+                <h1>Üdvözlünk!</h1>
+                <button class="hidden" id="register">Regisztráció</button>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
