@@ -239,3 +239,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                     }
 
                 } else {
+
+
+                    /*==============================
+                      NORMÁL ÁRAS HOZZÁADÁS
+                      (ha elfogyott az akciós limit)
+                    ==============================*/
+                    if (!isset($_SESSION['cart'][$p_id])) {
+                        $_SESSION['cart'][$p_id] = [
+                            'product_id' => $p_id,
+                            'name' => $product['name'],
+                            'price' => $product['price'],
+                            'quantity' => 1
+                        ];
+                    } else {
+                        $_SESSION['cart'][$p_id]['quantity']++;
+                    }
+                }
