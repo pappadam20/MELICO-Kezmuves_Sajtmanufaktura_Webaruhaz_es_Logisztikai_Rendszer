@@ -203,3 +203,162 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] == '2';
       </div>
    </nav>
 </header>
+
+<!--==================== MAIN ====================-->
+<main class="main">
+
+<!-- Kupon figyelmeztető sáv (csak ha van aktív kedvezmény) -->
+<?php if ($discount > 0): ?>
+      <div id="coupon-countdown" class="coupon-alert" style="display: block;">
+         <i class="ri-time-line"></i> 
+
+         <!-- Kupon információ -->
+         <span class="coupon-main">
+            FIGYELEM! Van egy <strong><?= $discount ?>%-os</strong> kuponod! Lejár:
+         </span>
+
+         <!-- Idő visszaszámláló -->
+         <span class="coupon-expiry">
+            <span id="timer">--:--:--</span>
+         </span>
+      </div>
+      <?php endif; ?>
+
+      <!-- Háttérkép -->
+      <img src="assets/img/Rólunk-bg.png" alt="image" class="home__bg">
+
+<!--==================== RÓLUNK ====================-->
+<!-- MELICO Manufaktúra bemutatása -->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Rólunk</h2>
+
+         <p class="about__description">
+            A MELICO egy prémium minőségű kézműves sajtokra specializálódott webáruház,
+            amelynek célja, hogy a különleges gasztronómiai élményeket kereső vásárlók
+            számára egyszerűen, gyorsan és biztonságosan tegye elérhetővé
+            a legjobb hazai és nemzetközi sajtokat.
+         </p>
+
+         <p class="about__description">
+            Hiszünk abban, hogy egy igazán jó sajt nem csupán egy termék,
+            hanem élmény is. Az alapanyagok minősége, az érlelés módja
+            és a gondos szállítás mind hozzájárulnak ahhoz,
+            hogy vásárlóink valódi prémium minőséget kapjanak.
+         </p>
+      </div>
+
+      <!-- Illusztráció -->
+      <img src="assets/img/about-melico.jpg" alt="MELICO manufaktúra" class="about-img">
+   </div>
+</section>
+
+
+<!--==================== TOVÁBBI SZEKCIÓK ====================-->
+<!-- A további szekciók (Termékeink, Beszállítók, Szállítás, Vásárlói élmény) 
+     ugyanazt a struktúrát követik: kép + szöveg kombináció grid elrendezésben -->
+
+
+<!--==================== SAJTJAINK ====================-->
+<section class="about section about--reverse">
+   <div class="about__container container grid">
+
+      <img src="assets/img/cheese3.png" alt="Kézműves sajtok" class="about-img">
+
+      <div class="about__data">
+         <h2 class="section__title">Termékeink</h2>
+
+         <p class="about__description">
+            Kínálatunkban gondosan válogatott kézműves sajtok szerepelnek,
+            amelyek hagyományos receptek alapján, természetes alapanyagokból készülnek.
+            A friss lágy sajtoktól kezdve az érlelt, karakteres ízvilágú különlegességekig
+            mindenki megtalálhatja a számára tökéletes választást.
+         </p>
+
+         <p class="about__description">
+            Fontos számunkra az állandó minőség, ezért kizárólag megbízható
+            termelőkkel dolgozunk együtt, akik számára a sajt nem tömegtermék,
+            hanem szenvedély.
+         </p>
+      </div>
+   </div>
+</section>
+
+<!--==================== BESZÁLLÍTÓK ====================-->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Beszállítóink</h2>
+
+         <p class="about__description">
+            A MELICO beszállítói között kis családi gazdaságok és elismert
+            sajtműhelyek egyaránt megtalálhatók. Közös bennük a minőség iránti
+            elkötelezettség és a hagyományos sajtészítési technikák tisztelete.
+         </p>
+
+         <p class="about__description">
+            Partnereinkkel szoros kapcsolatot ápolunk, így pontosan tudjuk,
+            honnan származik minden egyes termék, és biztosítani tudjuk
+            a folyamatos, megbízható ellátást.
+         </p>
+      </div>
+
+      <img src="assets/img/Beszállítóink.jpg" alt="Sajt beszállítók" class="about-img">
+   </div>
+</section>
+
+<!--==================== SZÁLLÍTÁS ====================-->
+<section class="about section about--reverse">
+   <div class="about__container container grid">
+
+      <img src="assets/img/MELICO Beszállítói furgon.png" alt="Szállítás" class="about-img">
+
+      <div class="about__data">
+         <h2 class="section__title">Szállítás és frissesség</h2>
+
+         <p class="about__description">
+            A sajtok minőségének megőrzése kiemelten fontos számunkra,
+            ezért a rendeléseket gondosan csomagolva, ellenőrzött körülmények között
+            juttatjuk el vásárlóinkhoz.
+         </p>
+
+         <p class="about__description">
+            Saját kiszállítási rendszerünk lehetővé teszi,
+            hogy a rendelés minden lépése nyomon követhető legyen,
+            így a termékek frissen és biztonságosan érkeznek meg.
+         </p>
+      </div>
+   </div>
+</section>
+
+<!--==================== VÁSÁRLÓI ÉLMÉNY ====================-->
+<section class="about section">
+   <div class="about__container container grid">
+
+      <div class="about__data">
+         <h2 class="section__title">Vásárlói élmény</h2>
+
+         <p class="about__description">
+            Webáruházunkat úgy alakítottuk ki, hogy a vásárlás gyors,
+            átlátható és kényelmes legyen. A részletes termékleírások,
+            vásárlói vélemények és egyszerű rendelési folyamat
+            mind ezt a célt szolgálják.
+         </p>
+
+         <p class="about__description">
+            Legyen szó egy különleges vacsoráról, ajándékról vagy
+            mindennapi gasztronómiai élvezetről, a MELICO-nál
+            biztos lehet benne, hogy minőségi sajtot választ.
+         </p>
+
+         <a href="termekeink.php" class="button">Termékeink megtekintése</a>
+      </div>
+
+      <img src="assets/img/Vásárlói élmény.jpg" alt="Vásárlói élmény" class="about-img">
+   </div>
+</section>
+
+</main>
