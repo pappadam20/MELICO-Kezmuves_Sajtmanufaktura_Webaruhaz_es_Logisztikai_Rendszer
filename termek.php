@@ -190,3 +190,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
           KOSÁR INICIALIZÁLÁS
         ==============================*/
         if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+
+
+        /*==============================
+          KÉSZLET ELLENŐRZÉS
+        ==============================*/
+        /*
+          Megnézzük, mennyi van már ebből a termékből a kosárban,
+          hogy ne lehessen túllépni a készletet.
+        */
+        $total_in_cart = 0;
+        foreach($_SESSION['cart'] as $item) {
+            if ($item['product_id'] == $p_id) {
+                $total_in_cart += $item['quantity'];
+            }
+        }
+
+        if ($product['stock'] > $total_in_cart) {
