@@ -586,3 +586,58 @@ function renderCategory($conn, $cat_id, $cat_title, $cat_subtitle) {
     ?>
 
 </main>
+
+<!--=============== LÁBLÉC ===============-->
+<footer class="footer">
+   <span class="footer__copy">&#169; 2026 MELICO. Minden jog fenntartva.</span>
+</footer>
+
+<!--=============== GÖRGETÉS FEL GOMB ===============-->
+<a href="#" class="scrollup" id="scroll-up"><i class="ri-arrow-up-line"></i></a>
+
+
+
+
+<script>
+/*=============== KUPON VISSZASZÁMLÁLÓ TIMER ===============*/
+/* Ez a script egy kupon lejárati idejéhez tartozó visszaszámlálót jelenít meg a felhasználónak. */
+
+const expiryTime = <?= (float)$expiry_timestamp ?>;             // PHP-ből kapott lejárati idő (timestamp ms-ben)
+const timerElement = document.getElementById('timer');          // Idő megjelenítésére szolgáló HTML elem
+const alertBox = document.getElementById('coupon-countdown');   // A teljes visszaszámláló doboz (pl. figyelmeztetés)
+
+/* Ha van érvényes lejárati idő és létezik a megjelenítő elem */
+if (expiryTime > 0 && timerElement) {
+
+    /* Frissítő függvény, ami másodpercenként újraszámolja a hátralévő időt */
+    const updateTimer = () => {
+        const now = new Date().getTime();   // Jelenlegi idő
+        const distance = expiryTime - now;  // Hátralévő idő ms-ben
+
+        /* Ha lejárt az idő, eltüntetjük a visszaszámlálót */
+        if (distance <= 0) {
+            if (alertBox) alertBox.style.display = 'none';
+            return;
+        }
+
+        /* Idő bontása napokra, órákra, percekre, másodpercekre */
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        /* Kétjegyű formázás (pl. 09:05:03) */
+        const h = hours.toString().padStart(2, '0');
+        const m = minutes.toString().padStart(2, '0');
+        const s = seconds.toString().padStart(2, '0');
+
+        /* Szöveges megjelenítés összeállítása */
+        let timeDisplay = days + " nap " + `${h}ó:${m}p:${s}m`;
+        timerElement.innerHTML = timeDisplay;
+    };
+
+    /* Azonnali frissítés, majd 1 másodpercenként ismétlés */
+    updateTimer();
+    setInterval(updateTimer, 1000);
+}
+</script>
