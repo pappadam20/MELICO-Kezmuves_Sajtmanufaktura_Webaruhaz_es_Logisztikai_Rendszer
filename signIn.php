@@ -1,85 +1,92 @@
-<!DOCTYPE html>
-<html lang="hu">
+<?php
+session_start();    // Session indítása (felhasználói adatok tárolásához)
+include "db.php";   // Külső adatbázis kapcsolat (ha használod)
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//=============== ADATBÁZIS KAPCSOLAT ===============
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "melico";
 
-    <link rel="shortcut icon" href="assets/img/logo/MELICO LOGO 2.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/SignIn.css">
+// Kapcsolódás MySQL adatbázishoz
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Database error");  // Hiba esetén leáll
+}
 
-    <title>Bejelentkezés</title>
-</head>
+//=============== REGISZTRÁCIÓ ===============
+if (isset($_POST['register'])) {
 
-<body>
+    // Űrlap adatok beolvasása
+    $name  = $_POST['name'];
+    $email = $_POST['email'];
+    // Jelszó biztonságos hash-elése
+    $passw = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    <div class="container" id="container">
+    // Felhasználó mentése adatbázisba (prepared statement – SQL injection védelem)
+    $stmt = $conn->prepare("INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $name, $email, $passw);
+    $stmt->execute();
+    $stmt->close();
 
-        <!-- REGISZTRÁCIÓ -->
-        <div class="form-container sign-up">
-            <form>
-                <h1>Regisztráció</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>vagy regisztráljon e-mail címével</span>
-                <input type="text" placeholder="Név">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Jelszó">
-                <button>Regisztráció</button>
+    // Sikeres regisztráció visszajelzés
+    echo "<script>alert('Sikeres regisztráció!');</script>";
+}
 
-                <a href="index.html" class="back-home">Vissza a főoldalra</a>
-            </form>
-        </div>
+//=============== BEJELENTKEZÉS ===============
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $passw = $_POST['password'];
 
-        <!-- BEJELENTKEZÉS -->
-        <div class="form-container sign-in">
-            <form>
-                <h1>Bejelentkezés</h1>
+    // Felhasználó lekérdezése email alapján
+    $stmt = $conn->prepare("SELECT id, password, role, coupon_discount, coupon_expiry FROM USERS WHERE email = ?");
+    if (!$stmt) {
+        die("SQL hiba: " . $conn->error);   // Hibakezelés
+    }
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
+    // Ha létezik ilyen felhasználó
+    if ($stmt->num_rows > 0) {
 
-                <span>vagy használja e-mail jelszavát</span>
+        $stmt->bind_result($id, $hashed, $role, $coupon_discount, $coupon_expiry);
+        $stmt->fetch();
 
-                <input type="email" placeholder="Email" name="email" required>
-                <input type="password" placeholder="Jelszó" name="password" required>
+        // Jelszó ellenőrzése
+        if (password_verify($passw, $hashed)) {
 
-                <a href="#">Elfelejtette a jelszavát?</a>
-                <button type="submit">Bejelentkezés</button>
+            // Session adatok mentése
+            $_SESSION['user_id'] = $id;
+            $_SESSION['role'] = $role;
 
-                <a href="index.html" class="back-home">Vissza a főoldalra</a>
-            </form>
-        </div>
+            //=============== KUPON KEZELÉS ===============
+            // Csak akkor töltjük vissza, ha még érvényes
+            if (!empty($coupon_expiry) && $coupon_expiry > time()) {
+                $_SESSION['coupon_discount'] = $coupon_discount;
+                $_SESSION['coupon_expiry'] = $coupon_expiry;
+            }
 
-        <!-- ANIMÁCIÓS PANEL -->
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Üdvözöljük Újra!</h1>
-                    <p>Adja meg személyes adatait, hogy a webhely összes funkcióját használhassa.</p>
-                    <button class="hidden" id="login">Bejelentkezés</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Üdvözlünk!</h1>
-                    <p>Regisztráljon személyes adataival, hogy a webhely összes funkcióját használhassa.</p>
-                    <button class="hidden" id="register">Regisztráció</button>
-                </div>
-            </div>
-        </div>
+            //=============== ÁTIRÁNYÍTÁS SZEREPKÖR ALAPJÁN ===============
+            if ($role == '2') {
+                header("Location: admin.php");  // Admin felület
+            } elseif ($role == '1') {
+                header("Location: futar.php");  // Futár felület
+            } else {
+                header("Location: index.php");  // Vásárlói felület
+            }
+            exit;
 
-    </div>
+        } else {
+            // Hibás jelszó
+            $error = "Hibás email vagy jelszó!";
+        }
 
-    <script src="assets/js/signIn.js"></script>
+    } else {
+        // Nincs ilyen email
+        $error = "Hibás email vagy jelszó!";
+    }
 
-</body>
-
-</html>
+    $stmt->close();
+}
+?>
