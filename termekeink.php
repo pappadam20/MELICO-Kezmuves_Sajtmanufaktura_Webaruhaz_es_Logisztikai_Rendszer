@@ -62,3 +62,33 @@ session_start();            // Munkamenet indítása a felhasználói adatok (pl
 require_once "db.php";      // Adatbázis kapcsolat betöltése
 
 $_SESSION['last_page'] = 'termekeink.php';  // Az utolsó meglátogatott oldal mentése (pl. visszairányításhoz)
+
+
+
+// --- 1. KEDVEZMÉNY ÉS KOSÁR ADATOK ---
+
+// Beállítások lekérése az adatbázisból (pl. hány termékre alkalmazható a kedvezmény)
+$settings_res = $conn->query("SELECT max_discounted_items FROM SETTINGS LIMIT 1");
+$settings = $settings_res->fetch_assoc();
+
+// Maximálisan kedvezményezhető termékek száma (ha nincs adat, alapértelmezett: 1)
+$max_allowed_discounted = $settings['max_discounted_items'] ?? 1;
+
+// Alapértelmezett kedvezmény értékek inicializálása
+$discount = 0;
+$expiry_timestamp = 0;
+
+// Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
+if (isset($_SESSION['user_id'])) {
+    // Ha van érvényes kupon a session-ben és még nem járt le
+    if (isset($_SESSION['coupon_expiry']) && $_SESSION['coupon_expiry'] > time()) {
+
+        $discount = $_SESSION['coupon_discount'] ?? 0;          // Kedvezmény mértéke (%)
+        $expiry_timestamp = $_SESSION['coupon_expiry'] * 1000;  // Lejárati idő (ms, JS kompatibilitás miatt)
+
+    } else {
+        // Ha a kupon lejárt vagy nem érvényes, töröljük a session-ből
+        unset($_SESSION['coupon_discount']);
+        unset($_SESSION['coupon_expiry']);
+    }
+}
