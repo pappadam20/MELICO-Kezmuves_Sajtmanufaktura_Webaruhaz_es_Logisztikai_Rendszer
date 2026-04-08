@@ -489,3 +489,35 @@ if ($name === "Burrata" && empty($description)) {
                     Tökéletes választás salátákhoz, tálakhoz vagy egyszerűen friss kenyérrel.  
                     Kiemelkedő minőségét gondos kézműves előállítás biztosítja.";
 }
+
+//--------------------------------------------------------------------------
+
+//category_2
+
+// Trappista alapértelmezett leírása
+if ($name === "Trappista" && empty($description)) {
+    $description = "A Trappista egy klasszikus magyar félkemény sajt, enyhén karakteres ízzel és kellemes állaggal.  
+                    Kiváló szendvicsekhez, főzéshez vagy egyszerűen önmagában is fogyasztható.  
+                    Hagyományos érlelési módszerekkel készül, mindig friss és minőségi.";
+}
+
+// Gouda Holland alapértelmezett leírása
+if ($name === "Gouda Holland" && empty($description)) {
+    $description = "A holland Gouda sajt enyhén édes, lágyan olvadó textúrával rendelkezik.  
+                    Tökéletes szendvicsekhez, sajttálakhoz, vagy reszelve főzéshez.  
+                    A hagyományos holland módszer biztosítja a gazdag és karakteres ízt.";
+}
+
+// Edami alapértelmezett leírása
+if ($name === "Edami" && empty($description)) {
+    $description = "Az Edami sajt enyhén diós ízű, félkemény állagú és jól szeletelhető.  
+                    Kiváló választás szendvicsekhez, sajttálakhoz vagy főzéshez.  
+                    Hagymás, olajos és enyhén fűszeres ételekhez is tökéletesen illik.";
+}
+
+// Maasdam alapértelmezett leírása
+if ($name === "Maasdam" && empty($description)) {
+    $description = "A Maasdam sajtra jellemző a lágy, kissé édeskés íz és a jellegzetes lyukacsos szerkezet.  
+                    Ideális szendvicsekhez, sajttálakhoz, valamint olvasztva ételekhez.  
+                    A holland tradíció és a minőségi tej biztosítja a sajt jellegzetes karakterét.";
+}
