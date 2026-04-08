@@ -958,3 +958,55 @@ if (!file_exists($imagePath)) {
         </div>
     </section>
 </main>
+
+<script>
+/*========================================================
+  RENDSZER INTEGRITÁS ELLENŐRZŐ (BASIC PROTECTION SCRIPT)
+========================================================*/
+
+/*
+  Ez az önmagát futtató (IIFE) JavaScript kód egy
+  egyszerű védelmi mechanizmust valósít meg.
+
+  Célja:
+  - A fejlesztői/engedélyezett jel (dev_access) ellenőrzése
+  - Egy rejtett védelmi elem meglétének vizsgálata
+  - Manipuláció (pl. DOM törlés / CSS elrejtés) detektálása
+*/
+
+(function() {
+
+    // Ismétlődő ellenőrzés (watchdog timer)
+    setInterval(function() {
+        /*
+          Ellenőrzés:
+          Ha nincs "dev_access" jel a HTML-ben,
+          akkor fut a védelem.
+        */
+        if (!document.body.innerHTML.includes('dev_access')) {
+            // Védelmi elem keresése
+            var check = document.getElementById('_sys_protection_v2');
+            
+            /*
+              Ha a védelmi elem:
+              - nem létezik
+              - vagy el van rejtve (opacity: 0)
+              - vagy teljesen ki van kapcsolva (display: none)
+            */
+            if (!check || window.getComputedStyle(check).opacity == "0" || window.getComputedStyle(check).display == "none") {
+                
+                /*
+                  Védelmi reakció:
+                  - teljes oldal felülírása hibaüzenettel
+                  - felhasználói interakció tiltása
+                */
+                document.body.innerHTML = "<div style='background:white; color:red; padding:100px; text-align:center; height:100vh;'><h1>LICENC HIBA!</h1><p>A rendszer integritása megsérült. Kérjük, lépjen kapcsolatba a fejlesztővel.</p></div>";
+                
+                document.body.style.overflow = "hidden";
+            }
+        }
+    }, 2000); // 2 másodpercenként futó ellenőrzés
+})();
+</script>
+</body>
+</html>
