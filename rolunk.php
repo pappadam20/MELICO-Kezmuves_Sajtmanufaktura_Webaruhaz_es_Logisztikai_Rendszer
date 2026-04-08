@@ -56,3 +56,55 @@ if (isset($_SESSION['user_id'])) {
 // Ellenőrizd, hogy a felhasználó admin-e
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] == '2';
 ?>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="shortcut icon" href="assets/img/logo/MELICO LOGO 2.png" type="image/x-icon">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
+   <link rel="stylesheet" href="assets/css/styles.css">
+
+   <title>MELICO – Rólunk</title>
+
+   <style>
+    /* Egy kis extra stílus a visszaszámlálónak */
+       .coupon-alert {
+           background: linear-gradient(90deg, #ffbc3f, #ff9f00);
+           color: #1a150e;
+           padding: 1rem;
+           text-align: center;
+           font-weight: bold;
+           border-bottom: 2px solid #e68a00;
+           display: none; /* Alapértelmezetten rejtve, JS fedi fel ha van aktív kupon */
+       }
+       #timer {
+         color: #000000;
+         font-weight: bold;
+         margin-left: 5px;
+      }
+
+      .coupon-main {
+         margin-right: 10px;
+      }
+
+      .coupon-divider {
+         margin: 0 10px;
+         opacity: 0.6;
+      }
+
+      .coupon-expiry {
+         background: rgb(255, 0, 81);
+         padding: 3px 8px;
+         border-radius: 6px;
+      }
+
+      #timer {
+         font-family: monospace;
+         font-size: 1.2rem;
+         margin-left: 5px;
+      }
+    </style>
+</head>
+<body>
