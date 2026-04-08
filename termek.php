@@ -31,3 +31,19 @@
 
 session_start();
 require_once "db.php";
+
+
+
+/*===============================
+  KEDVEZMÉNY (KUPON) KEZELÉS
+===============================*/
+/*
+  Ez a rész a kupon alapú kedvezményt és a bejelentkezett felhasználó azonosítóját kezeli.
+
+  - A kedvezmény értéke a session-ben tárolódik
+  - Ha nincs kupon, alapértelmezett érték: 0
+  - A user_id szintén session-ből kerül kiolvasásra
+  - Ha nincs bejelentkezett felhasználó, alapértelmezett érték: 0
+*/
+$discount = $_SESSION['coupon_discount'] ?? 0;
+$user_id = $_SESSION['user_id'] ?? 0;
