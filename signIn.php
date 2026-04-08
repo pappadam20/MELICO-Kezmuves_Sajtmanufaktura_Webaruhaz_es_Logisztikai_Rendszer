@@ -90,3 +90,52 @@ if (isset($_POST['login'])) {
     $stmt->close();
 }
 ?>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/logo/MELICO LOGO 2.png">
+
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <title>Bejelentkezés</title>
+
+    <style>
+
+        /* Űrlap alap elrendezése: elemek egymás alatt, középre igazítva */
+        form{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+        }
+
+        /* Gomb elhelyezése az űrlapon belül */
+        form button{
+            margin-top:10px;
+        }
+
+        /* VISSZA GOMB – linkként működő gomb stílus */
+        .back-btn{
+            display:block;          /* blokk szintű elem a könnyebb pozicionálásért */
+            margin-top:10px;        /* távolság a felette lévő elemtől */
+            text-align:center;      /* szöveg középre igazítása */
+            text-decoration:none;   /* alapértelmezett aláhúzás eltávolítása */
+            color:#ac5c00;          /* fő szín (brand színhez igazítva) */
+            font-weight:600;        /* félkövér kiemelés */
+        }
+
+        /* Hover effekt a jobb felhasználói élményért */
+        .back-btn:hover{
+            text-decoration:underline;  /* aláhúzás megjelenítése hover esetén */
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="assets/css/SignIn.css">
+
+</head>
+<body>
