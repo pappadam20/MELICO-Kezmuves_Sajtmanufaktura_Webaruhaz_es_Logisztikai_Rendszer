@@ -273,3 +273,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                     $_SESSION['cart'][$p_id]['quantity']++;
                 }
             }
+
+            /*==============================
+              SIKERES HOZZÁADÁS
+            ==============================*/
+            header("Location: termek.php?id=$p_id&added=1");
+            exit;
