@@ -901,3 +901,29 @@ if (!file_exists($imagePath)) {
                         else echo "Elfogyott";
                     ?>
                 </div>
+
+                <br>
+
+                <!--=============== KOSÁRBA HELYEZÉS ===============-->
+                <!--
+                Csak akkor engedélyezett:
+                - van készlet
+                - be van jelentkezve felhasználó
+                - NEM admin
+                -->
+                <?php if ($stock > 0 && isset($_SESSION['role']) && $_SESSION['role'] == '0'): ?>
+                    <form method="POST">
+                        <input type="hidden" name="id" value="<?= $id ?>">
+                        <button type="submit" name="add_to_cart" class="favorite__button">
+                            <i class="ri-add-line"></i> Kosárba
+                        </button>
+                    </form>
+
+                <!-- Elfogyott állapot -->
+                <?php elseif ($stock <= 0): ?>
+                    <button class="favorite__button" disabled>Elfogyott</button>
+
+                <!-- Nem bejelentkezett / nem vásárló -->
+                <?php elseif (!$isAdmin): ?>
+                    <p style="color:red;">Vásárláshoz jelentkezzen be!</p>
+                <?php endif; ?>
