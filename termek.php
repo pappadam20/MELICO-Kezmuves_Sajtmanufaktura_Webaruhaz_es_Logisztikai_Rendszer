@@ -321,3 +321,6 @@ if ($stmt = $conn->prepare("
 
     // Lekérdezés futtatása
     $stmt->execute();
+
+    // Eredmény memóriába töltése
+    $stmt->store_result();
