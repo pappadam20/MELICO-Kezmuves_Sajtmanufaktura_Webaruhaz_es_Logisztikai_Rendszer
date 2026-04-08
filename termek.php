@@ -47,3 +47,25 @@ require_once "db.php";
 */
 $discount = $_SESSION['coupon_discount'] ?? 0;
 $user_id = $_SESSION['user_id'] ?? 0;
+
+
+
+// ===============================
+// BEÁLLÍTÁSOK LEKÉRÉSE (DINAMIKUS LIMIT)
+// ===============================
+/*
+  Ebben a részben az adatbázisból lekérjük a rendszer beállításait.
+
+  Cél:
+  - admin által módosítható limitek kezelése
+  - ne legyen hardcode-olva az érték a kódban
+*/
+
+// Lekérjük a SETTINGS táblából a maximálisan engedélyezett akciós termékek számát
+$settings_res = $conn->query("SELECT max_discounted_items FROM SETTINGS LIMIT 1");
+
+// Az eredmény sor lekérése asszociatív tömbként
+$settings = $settings_res->fetch_assoc();
+
+// Ha nincs beállítva érték, alapértelmezett 1-et használunk
+$max_allowed_discounted = $settings['max_discounted_items'] ?? 1;
