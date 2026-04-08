@@ -351,3 +351,24 @@ if ($stmt = $conn->prepare("
     */
     die("Adatbázis hiba.");
 }
+
+
+
+/*=========================================================
+  KUPON / KEDVEZMÉNY KVÓTA KEZELÉS
+=========================================================*/
+/*
+  Ez a logika kezeli a termékekhez kapcsolt kedvezményes vásárlási
+  limitet (kvótát).
+
+  Cél:
+  - Egy felhasználó csak meghatározott mennyiségben vásárolhasson
+    kedvezményes áron.
+  - Figyelembe veszi:
+      1. korábbi rendeléseket (adatbázisból)
+      2. jelenlegi kosár tartalmát (session)
+*/
+
+
+/* Már kedvezményesen megvásárolt mennyiség */
+$already_bought_discounted = 0;
