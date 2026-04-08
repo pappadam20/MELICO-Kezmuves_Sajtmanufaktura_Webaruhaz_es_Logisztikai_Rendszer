@@ -207,3 +207,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         }
 
         if ($product['stock'] > $total_in_cart) {
+
+
+            /*==============================
+              KUPON / KEDVEZMÉNY LOGIKA
+            ==============================*/
+            /*
+              - Max kedvezményes darabszám korlát
+              - Ha elfogy, normál áron kerül a kosárba
+            */
+            if ($discount > 0) {
+
+                $discount_key = $p_id . "_discounted";
+                $discounted_qty = $_SESSION['cart'][$discount_key]['quantity'] ?? 0;
+
+                if ($discounted_qty < $max_allowed_discounted) {
+
+                    // Kedvezményes ár számítása
+                    $price_after_discount = $product['price'] * (1 - ($discount / 100));
+
+                    // Első darab létrehozása
+                    if (!isset($_SESSION['cart'][$discount_key])) {
+                        $_SESSION['cart'][$discount_key] = [
+                            'product_id' => $p_id,
+                            'name' => $product['name'] . " (Akciós)",
+                            'price' => $price_after_discount,
+                            'quantity' => 1
+                        ];
+                    } else {
+                        $_SESSION['cart'][$discount_key]['quantity']++;
+                    }
+
+                } else {
