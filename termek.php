@@ -411,3 +411,9 @@ if ($user_id > 0 && $discount > 0) {
 /* Kosárban már lévő kedvezményes mennyiség */
 $discount_key = $id . "_discounted";
 $already_in_cart_discounted = $_SESSION['cart'][$discount_key]['quantity'] ?? 0;
+
+/*
+  Összes felhasznált kvóta:
+  = már megvett + kosárban lévő
+*/
+$total_used_quota = $already_bought_discounted + $already_in_cart_discounted;
