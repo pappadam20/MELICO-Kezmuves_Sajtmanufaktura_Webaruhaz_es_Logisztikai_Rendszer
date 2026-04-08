@@ -433,3 +433,77 @@ function renderCategory($conn, $cat_id, $cat_title, $cat_subtitle) {
     </style>
 </head>
 <body>
+
+<header class="header" id="header">
+   <nav class="nav container">
+      <a href="index.php" class="nav__logo">
+         <img src="assets/img/logo/MELICO LOGO.png" alt="MELICO Logo" />
+      </a>
+
+      <!-- NAVIGÁCIÓS MENÜ -->
+      <div class="nav__menu" id="nav-menu">
+         <ul class="nav__list">
+            <!-- Alap menüpontok -->
+            <li class="nav__item"><a href="index.php" class="nav__link">Főoldal</a></li>
+            <li class="nav__item"><a href="termekeink.php" class="nav__link active-link">Termékeink</a></li>
+            <li class="nav__item"><a href="rolunk.php" class="nav__link">Rólunk</a></li>
+            <li class="nav__item"><a href="kapcsolatfelvetel.php" class="nav__link">Kapcsolatfelvétel</a></li>
+
+            <!-- ADMIN MENÜ: csak admin felhasználóknak jelenik meg -->
+            <?php if($isAdmin): ?>
+            <li class="nav__item">
+               <a href="admin.php" class="nav__link <?php echo basename($_SERVER['PHP_SELF'])=='admin.php' ? 'active-link' : ''; ?>">Admin</a>
+            </li>
+            <?php endif; ?>
+
+            <!-- BEJELENTKEZÉS / PROFIL -->
+            <li class="nav__item">
+               <?php if (isset($_SESSION['user_id'])): ?>
+                  <a href="profil.php" class="nav__link nav__profile">
+                        <i class="ri-user-line"></i>
+                  </a>
+               <?php else: ?>
+                <!-- Ha nincs: bejelentkezés gomb -->
+                  <a href="signIn.php" class="nav__signin button">Bejelentkezés</a>
+               <?php endif; ?>
+            </li>
+
+            <!-- KUPON ÉS KOSÁR: nem admin felhasználóknak -->
+            <?php if (!$isAdmin): ?>
+                <!-- Kupon oldal ikon -->
+               <li class="nav__item">
+                  <a href="kupon.php" class="nav__link <?php echo basename($_SERVER['PHP_SELF'])=='kupon.php' ? 'active-link' : ''; ?>">
+                     <i class="ri-coupon-2-line"></i>
+                  </a>
+               </li>
+
+               <!-- Kosár ikon és darabszám kijelzés -->
+               <li class="nav__item">
+                   <a href="kosar.php" class="nav__link"><i class="ri-shopping-cart-fill"></i>
+                   <?php 
+                   $total_items = 0;
+                   if (!empty($_SESSION['cart'])) {
+                       foreach ($_SESSION['cart'] as $item) {
+                           $total_items += $item['quantity'];
+                       }
+                       /* Csak akkor jelenik meg a darabszám, ha van termék a kosárban */
+                       if ($total_items > 0) echo "($total_items)";
+                   }
+                   ?>
+                   </a>
+               </li>
+            <?php endif; ?>
+         </ul>
+
+         <!-- Mobil menü bezáró ikon -->
+         <div class="nav__close" id="nav-close"><i class="ri-close-line"></i></div>
+
+         <!-- Dekoratív képek a menüben -->
+         <img src="assets/img/cheese2.png" alt="image" class="nav__img-1">
+         <img src="assets/img/cheese1.png" alt="image" class="nav__img-2">
+      </div>
+
+      <!-- Mobil menü megnyitó ikon -->
+      <div class="nav__toggle" id="nav-toggle"><i class="ri-menu-fill"></i></div>
+   </nav>
+</header>
