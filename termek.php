@@ -407,3 +407,7 @@ if ($user_id > 0 && $discount > 0) {
     $already_bought_discounted = $res_bought['total'] ?? 0;
     $check_stmt->close();
 }
+
+/* Kosárban már lévő kedvezményes mennyiség */
+$discount_key = $id . "_discounted";
+$already_in_cart_discounted = $_SESSION['cart'][$discount_key]['quantity'] ?? 0;
