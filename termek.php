@@ -318,3 +318,6 @@ if ($stmt = $conn->prepare("
       - $product_id = a lekérdezett termék azonosítója
     */
     $stmt->bind_param("i", $product_id);
+
+    // Lekérdezés futtatása
+    $stmt->execute();
