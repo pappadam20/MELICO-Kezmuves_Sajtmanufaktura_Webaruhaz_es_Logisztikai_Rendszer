@@ -331,3 +331,15 @@ if ($stmt = $conn->prepare("
       - ha nincs találat -> hibát dobunk
     */
     if ($stmt->num_rows !== 1) die("A termék nem található.");
+
+    /*
+      Eredmény változókhoz kötése:
+      - az SQL SELECT sorrendje alapján történik
+    */
+    $stmt->bind_result($id, $name, $price, $stock, $category_id, $image, $category_name, $description, $supplier_name);
+    
+    // Adatok kiolvasása
+    $stmt->fetch();
+
+    // Statement lezárása (erőforrás felszabadítás)
+    $stmt->close();
