@@ -1,9 +1,10 @@
+<?php
 /*=============== BACKEND + SESSION KEZELÉS ===============*/
 /*
   - Adatbázis kapcsolat betöltése
   - Session indítása (ha még nincs elindítva)
 */
-<?php
+
 include "db.php";
 
 if (session_status() == PHP_SESSION_NONE) {
